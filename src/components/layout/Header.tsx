@@ -23,7 +23,7 @@ export function Header() {
       <div className="section-container">
         <div className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center">
-            <img src={logoAdeconex} alt="Adeconex Etiquetas" className="h-10" />
+            <img src={logoAdeconex} alt="Adeconex Etiquetas" className="h-14" />
           </Link>
 
           {/* Desktop nav */}
