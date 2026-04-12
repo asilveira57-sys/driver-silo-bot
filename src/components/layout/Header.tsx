@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Search, Printer, Download, BookOpen, Package, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoAdeconex from "@/assets/logo-adeconex.png";
 
 const navItems = [
   { label: "Impressoras", path: "/impressoras", icon: Printer },
@@ -21,13 +22,8 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="section-container">
         <div className="flex h-16 items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="hero-gradient rounded-lg p-2">
-              <Printer className="h-6 w-6 text-primary-foreground" />
-            </div>
-            <span className="font-heading text-xl font-bold text-foreground">
-              ADECONEX
-            </span>
+          <Link to="/" className="flex items-center">
+            <img src={logoAdeconex} alt="Adeconex Etiquetas" className="h-10" />
           </Link>
 
           {/* Desktop nav */}
