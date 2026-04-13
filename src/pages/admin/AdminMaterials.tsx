@@ -4,18 +4,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
-import type { Database } from "@/integrations/supabase/types";
 
-type Material = Database["public"]["Tables"]["materials"]["Row"];
 const emptyForm = { nome: "", categoria: "", descricao: "", link_produto: "", imagens: [] as string[] };
 
 export default function AdminMaterials() {
   const qc = useQueryClient();
-  const [editing, setEditing] = useState<Material | null>(null);
+  const [editing, setEditing] = useState<any>(null);
   const [creating, setCreating] = useState(false);
   const [form, setForm] = useState(emptyForm);
 
@@ -30,9 +28,8 @@ export default function AdminMaterials() {
   const saveMutation = useMutation({
     mutationFn: async () => {
       const payload = {
-        nome: form.nome.trim(),
-        categoria: form.categoria.trim(),
-        descricao: form.descricao.trim() || null,
+        nome: form.nome.trim(), categoria: form.categoria.trim(),
+        descricao: form.descricao || null,
         link_produto: form.link_produto.trim() || null,
         imagem_url: form.imagens[0] || null,
       };
@@ -54,7 +51,7 @@ export default function AdminMaterials() {
   });
 
   const resetForm = () => { setForm(emptyForm); setEditing(null); setCreating(false); };
-  const startEdit = (m: Material) => {
+  const startEdit = (m: any) => {
     setEditing(m); setCreating(true);
     setForm({ nome: m.nome, categoria: m.categoria, descricao: m.descricao || "", link_produto: m.link_produto || "", imagens: m.imagem_url ? [m.imagem_url] : [] });
   };
@@ -76,16 +73,12 @@ export default function AdminMaterials() {
             <div><Label>Categoria</Label><Input value={form.categoria} onChange={(e) => setForm({ ...form, categoria: e.target.value })} placeholder="Ex: Etiqueta, Ribbon" /></div>
             <div className="sm:col-span-2"><Label>Link do Produto</Label><Input value={form.link_produto} onChange={(e) => setForm({ ...form, link_produto: e.target.value })} /></div>
             <div className="sm:col-span-2">
-              <ImageUpload
-                value={form.imagens}
-                onChange={(urls) => setForm({ ...form, imagens: urls })}
-                max={3}
-                folder="materials"
-                label="Imagens do Material"
-                hint="Tamanho ideal: 800×800px. Máximo 3 imagens."
-              />
+              <ImageUpload value={form.imagens} onChange={(urls) => setForm({ ...form, imagens: urls })} max={3} folder="materials" label="Imagens do Material" hint="Tamanho ideal: 800×800px. Máximo 3 imagens." />
             </div>
-            <div className="sm:col-span-2"><Label>Descrição</Label><Textarea value={form.descricao} onChange={(e) => setForm({ ...form, descricao: e.target.value })} rows={3} /></div>
+            <div className="sm:col-span-2">
+              <Label>Descrição</Label>
+              <RichTextEditor value={form.descricao} onChange={(html) => setForm({ ...form, descricao: html })} folder="materials" />
+            </div>
           </div>
           <div className="flex gap-3 mt-4">
             <Button onClick={() => saveMutation.mutate()} disabled={!form.nome.trim() || !form.categoria.trim() || saveMutation.isPending}>{saveMutation.isPending ? "Salvando..." : "Salvar"}</Button>
@@ -95,7 +88,7 @@ export default function AdminMaterials() {
       )}
       {isLoading ? <p className="text-muted-foreground">Carregando...</p> : (
         <div className="space-y-2">
-          {(items || []).map((m) => (
+          {(items || []).map((m: any) => (
             <div key={m.id} className="flex items-center gap-4 bg-background rounded-md border border-border px-4 py-3">
               {m.imagem_url && <img src={m.imagem_url} alt={m.nome} className="h-10 w-10 object-contain rounded" />}
               <div className="flex-1"><p className="font-medium text-foreground">{m.nome}</p><p className="text-xs text-muted-foreground">{m.categoria}</p></div>
