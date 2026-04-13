@@ -17,6 +17,7 @@ import TutorialDetailPage from "./pages/TutorialDetailPage";
 import MaterialsPage from "./pages/MaterialsPage";
 import DownloadsPage from "./pages/DownloadsPage";
 import BlogPage from "./pages/BlogPage";
+import BlogPostDetailPage from "./pages/BlogPostDetailPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminHome from "./pages/admin/AdminHome";
