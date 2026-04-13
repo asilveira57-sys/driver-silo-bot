@@ -1,44 +1,66 @@
 
 
-## Rebranding: Alinhar identidade visual com adeconex.com.br
+## Plano: Blog e Admin com Editor Rico + SEO Completo
 
-### Problema
-As cores atuais do site são azul e amarelo, mas a marca Adeconex usa **vermelho bordô/carmesim** como cor principal, com branco de fundo e preto de texto — conforme visível no site de referência.
+### Problema Atual
+- Todos os formulários admin (blog, tutoriais, impressoras, softwares, drivers) usam `<Textarea>` simples — texto puro, sem formatação
+- Sem campos de SEO (meta title, meta description, meta keywords)
+- Sem editor rico: sem H1/H2/H3, sem bullet points, sem inserção de imagens inline, sem colar HTML/script
+- Páginas de detalhe renderizam conteúdo como texto puro (`whitespace-pre-wrap`)
+- Blog não tem página de detalhe individual (`/blog/:slug`)
 
-### Cores extraídas do site de referência
-- **Primária (bordô):** `#9B1B30` (vermelho escuro/bordô)
-- **Destaque/CTA:** `#C41E3A` (vermelho mais vivo para botões)
-- **Fundo:** `#FFFFFF` branco
-- **Texto:** `#1A1A1A` preto
-- **Top bar/Nav:** Fundo bordô escuro `#7A1525`
-- **Acentos:** Tons de vermelho claro para hovers
+### Solução
 
-### Arquivos a alterar
+#### 1. Instalar Editor Rico (TipTap)
+- Adicionar `@tiptap/react`, `@tiptap/starter-kit`, extensões para imagens, links, headings
+- Criar componente `RichTextEditor` reutilizável com toolbar visual:
+  - **Headings**: H1, H2, H3
+  - **Formatação**: Negrito, Itálico, Sublinhado
+  - **Listas**: Bullet points, listas numeradas
+  - **Mídia**: Inserir imagem (upload via storage ou URL)
+  - **Links**: Inserir/editar links
+  - **HTML**: Botão para alternar entre visual e código-fonte (colar scripts/HTML)
+- O editor salva HTML no banco; as páginas de detalhe renderizam HTML sanitizado
 
-**1. `src/index.css` — Substituir tokens de cor**
-- `--primary`: de azul `213 80% 45%` → bordô ~`348 70% 36%`
-- `--secondary`: de amarelo → vermelho mais vivo ~`350 75% 45%`
-- `--accent`: de azul claro → rosa/bordô claro
-- `--hero-gradient`: gradiente bordô
-- `--cta-gradient`: gradiente vermelho CTA
-- `--sidebar-*`: tons bordô escuro
-- `--ring`: bordô
+#### 2. Adicionar Campos SEO na Tabela `blog_posts`
+- Migration: adicionar colunas `meta_title`, `meta_description`, `meta_keywords` (todos `text`, nullable)
+- Mesma migration para tabela `tutorials`: adicionar `meta_title`, `meta_description`, `meta_keywords`
+- Mesma migration para `printers`: adicionar `meta_title`, `meta_description`, `meta_keywords`, `conteudo` (HTML rico para descrição completa)
+- Mesma migration para `softwares`: adicionar `meta_title`, `meta_description`, `meta_keywords`, `conteudo`
+- Mesma migration para `drivers`: adicionar `meta_title`, `meta_description`, `meta_keywords`, `conteudo`
 
-**2. `tailwind.config.ts` — Sem alteração estrutural**
-Os tokens CSS custom properties já são referenciados via `hsl(var(...))`, então basta mudar os valores no CSS.
+#### 3. Atualizar Todos os Formulários Admin
+Cada formulário admin ganha:
+- **Seção SEO** (colapsável): Meta Title, Meta Description, Meta Keywords
+- **Editor Rico** no lugar do Textarea para conteúdo/descrição
+- Blog e Tutoriais: editor rico no campo "Conteúdo"
+- Impressoras, Softwares, Drivers: editor rico no campo "Descrição" (que vira "Conteúdo")
 
-**3. `src/components/layout/Header.tsx`**
-- Classe `hero-gradient` no logo já seguirá a nova cor automaticamente via CSS.
+#### 4. Criar Página de Detalhe do Blog (`/blog/:slug`)
+- Nova rota `/blog/:slug` → `BlogPostDetailPage`
+- SEO completo: usa `meta_title` ou `titulo`, `meta_description` ou `resumo`, `meta_keywords`
+- JSON-LD com schema Article
+- Renderização do HTML do editor com `dangerouslySetInnerHTML` + sanitização (DOMPurify)
+- Sidebar com posts relacionados da mesma categoria
 
-**4. `src/components/layout/Footer.tsx`**
-- Já usa `hero-gradient` e `text-secondary`, seguirá automaticamente.
+#### 5. Atualizar BlogPage (listagem)
+- Buscar posts publicados do banco
+- Exibir cards com imagem de capa, título, resumo, categoria, data
+- Links para `/blog/:slug`
 
-**5. Cards e botões**
-- `download-btn` e `cta-gradient` já referenciam CSS custom props — mudam automaticamente.
+#### 6. Atualizar Páginas de Detalhe Existentes
+- `TutorialDetailPage`, `PrinterDetailPage`, `SoftwareDetailPage`, `DriverDetailPage`:
+  - Renderizar conteúdo como HTML (não mais `whitespace-pre-wrap`)
+  - Usar meta tags SEO dos campos do banco
+  - Adicionar `meta keywords` ao `SEOHead`
 
-**6. Atualizar `mem://design/tokens` e `mem://index.md`**
-- Corrigir a referência de "Blue/Yellow" para "Bordô/Vermelho".
+#### 7. Atualizar `SEOHead` Component
+- Adicionar suporte a `keywords` (meta tag)
+- Adicionar Open Graph tags (`og:title`, `og:description`, `og:image`)
 
-### Resumo
-A alteração é centralizada: trocar ~15 variáveis CSS em `src/index.css`. Todos os componentes já consomem essas variáveis, então a mudança propaga automaticamente por todo o site.
+### Arquivos Afetados
+- **Novos**: `src/components/admin/RichTextEditor.tsx`, `src/pages/BlogPostDetailPage.tsx`
+- **Migration**: 1 migration SQL com todas as colunas novas
+- **Editados**: `AdminBlog.tsx`, `AdminTutorials.tsx`, `AdminPrinters.tsx`, `AdminSoftwares.tsx`, `AdminDrivers.tsx`, `BlogPage.tsx`, `TutorialDetailPage.tsx`, `PrinterDetailPage.tsx`, `SoftwareDetailPage.tsx`, `DriverDetailPage.tsx`, `SEOHead.tsx`, `App.tsx`
+- **Dependências**: `@tiptap/react`, `@tiptap/starter-kit`, `@tiptap/extension-image`, `@tiptap/extension-link`, `@tiptap/extension-underline`, `@tiptap/extension-text-align`, `@tiptap/extension-placeholder`, `dompurify`
 
