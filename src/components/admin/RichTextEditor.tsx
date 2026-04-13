@@ -52,13 +52,13 @@ export function RichTextEditor({ value, onChange, placeholder = "Escreva o conte
 
   useEffect(() => {
     if (editor && value !== editor.getHTML()) {
-      editor.commands.setContent(value || "", false);
+      editor.commands.setContent(value || "", { emitUpdate: false });
     }
   }, [value, editor]);
 
   const toggleSource = useCallback(() => {
     if (sourceMode) {
-      editor?.commands.setContent(sourceCode, false);
+      editor?.commands.setContent(sourceCode, { emitUpdate: false });
       onChange(sourceCode);
       setSourceMode(false);
     } else {
