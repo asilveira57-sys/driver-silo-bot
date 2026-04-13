@@ -6,16 +6,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { SEOFields } from "@/components/admin/SEOFields";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, X, Eye, EyeOff } from "lucide-react";
-import type { Database } from "@/integrations/supabase/types";
 
-type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];
-const emptyForm = { titulo: "", slug: "", conteudo: "", resumo: "", categoria: "", imagens: [] as string[], publicado: false };
+const emptyForm = { titulo: "", slug: "", conteudo: "", resumo: "", categoria: "", imagens: [] as string[], publicado: false, meta_title: "", meta_description: "", meta_keywords: "" };
 
 export default function AdminBlog() {
   const qc = useQueryClient();
-  const [editing, setEditing] = useState<BlogPost | null>(null);
+  const [editing, setEditing] = useState<any>(null);
   const [creating, setCreating] = useState(false);
   const [form, setForm] = useState(emptyForm);
 
@@ -29,14 +29,17 @@ export default function AdminBlog() {
 
   const saveMutation = useMutation({
     mutationFn: async () => {
-      const payload = {
+      const payload: any = {
         titulo: form.titulo.trim(),
         slug: form.slug.trim(),
-        conteudo: form.conteudo.trim(),
+        conteudo: form.conteudo,
         resumo: form.resumo.trim() || null,
         categoria: form.categoria.trim(),
         imagem_url: form.imagens[0] || null,
         publicado: form.publicado,
+        meta_title: form.meta_title.trim() || null,
+        meta_description: form.meta_description.trim() || null,
+        meta_keywords: form.meta_keywords.trim() || null,
       };
       if (editing) {
         const { error } = await supabase.from("blog_posts").update(payload).eq("id", editing.id);
@@ -56,9 +59,9 @@ export default function AdminBlog() {
   });
 
   const resetForm = () => { setForm(emptyForm); setEditing(null); setCreating(false); };
-  const startEdit = (p: BlogPost) => {
+  const startEdit = (p: any) => {
     setEditing(p); setCreating(true);
-    setForm({ titulo: p.titulo, slug: p.slug, conteudo: p.conteudo, resumo: p.resumo || "", categoria: p.categoria, imagens: p.imagem_url ? [p.imagem_url] : [], publicado: p.publicado });
+    setForm({ titulo: p.titulo, slug: p.slug, conteudo: p.conteudo, resumo: p.resumo || "", categoria: p.categoria, imagens: p.imagem_url ? [p.imagem_url] : [], publicado: p.publicado, meta_title: p.meta_title || "", meta_description: p.meta_description || "", meta_keywords: p.meta_keywords || "" });
   };
 
   const generateSlug = () => {
@@ -82,17 +85,14 @@ export default function AdminBlog() {
             <div><Label>Slug</Label><div className="flex gap-2"><Input value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} /><Button type="button" variant="outline" size="sm" onClick={generateSlug}>Gerar</Button></div></div>
             <div><Label>Categoria</Label><Input value={form.categoria} onChange={(e) => setForm({ ...form, categoria: e.target.value })} /></div>
             <div className="sm:col-span-2">
-              <ImageUpload
-                value={form.imagens}
-                onChange={(urls) => setForm({ ...form, imagens: urls })}
-                max={1}
-                folder="blog"
-                label="Imagem de Capa"
-                hint="Tamanho ideal: 1200×630px"
-              />
+              <ImageUpload value={form.imagens} onChange={(urls) => setForm({ ...form, imagens: urls })} max={1} folder="blog" label="Imagem de Capa" hint="Tamanho ideal: 1200×630px" />
             </div>
             <div className="sm:col-span-2"><Label>Resumo</Label><Textarea value={form.resumo} onChange={(e) => setForm({ ...form, resumo: e.target.value })} rows={2} /></div>
-            <div className="sm:col-span-2"><Label>Conteúdo</Label><Textarea value={form.conteudo} onChange={(e) => setForm({ ...form, conteudo: e.target.value })} rows={12} /></div>
+            <div className="sm:col-span-2">
+              <Label>Conteúdo</Label>
+              <RichTextEditor value={form.conteudo} onChange={(html) => setForm({ ...form, conteudo: html })} folder="blog" />
+            </div>
+            <SEOFields metaTitle={form.meta_title} metaDescription={form.meta_description} metaKeywords={form.meta_keywords} onChange={(field, value) => setForm({ ...form, [field]: value })} />
             <div className="flex items-center gap-2">
               <input type="checkbox" checked={form.publicado} onChange={(e) => setForm({ ...form, publicado: e.target.checked })} id="publicado" />
               <Label htmlFor="publicado">Publicado</Label>
@@ -106,7 +106,7 @@ export default function AdminBlog() {
       )}
       {isLoading ? <p className="text-muted-foreground">Carregando...</p> : (
         <div className="space-y-2">
-          {(items || []).map((p) => (
+          {(items || []).map((p: any) => (
             <div key={p.id} className="flex items-center gap-4 bg-background rounded-md border border-border px-4 py-3">
               {p.imagem_url && <img src={p.imagem_url} alt="" className="h-10 w-10 object-cover rounded" />}
               <div className="flex-1">

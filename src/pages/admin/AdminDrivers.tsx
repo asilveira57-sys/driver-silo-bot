@@ -4,17 +4,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { SEOFields } from "@/components/admin/SEOFields";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
-import type { Database } from "@/integrations/supabase/types";
 
-type Driver = Database["public"]["Tables"]["drivers"]["Row"];
-
-const emptyForm = { marca: "", modelo: "", nome: "", versao: "", sistema_operacional: "", link_download: "", ativo: true };
+const emptyForm = { marca: "", modelo: "", nome: "", versao: "", sistema_operacional: "", link_download: "", ativo: true, conteudo: "", meta_title: "", meta_description: "", meta_keywords: "" };
 
 export default function AdminDrivers() {
   const qc = useQueryClient();
-  const [editing, setEditing] = useState<Driver | null>(null);
+  const [editing, setEditing] = useState<any>(null);
   const [creating, setCreating] = useState(false);
   const [form, setForm] = useState(emptyForm);
 
@@ -28,14 +27,11 @@ export default function AdminDrivers() {
 
   const saveMutation = useMutation({
     mutationFn: async () => {
-      const payload = {
-        marca: form.marca.trim(),
-        modelo: form.modelo.trim(),
-        nome: form.nome.trim(),
-        versao: form.versao.trim(),
-        sistema_operacional: form.sistema_operacional.trim(),
-        link_download: form.link_download.trim(),
-        ativo: form.ativo,
+      const payload: any = {
+        marca: form.marca.trim(), modelo: form.modelo.trim(), nome: form.nome.trim(), versao: form.versao.trim(),
+        sistema_operacional: form.sistema_operacional.trim(), link_download: form.link_download.trim(), ativo: form.ativo,
+        conteudo: form.conteudo || null,
+        meta_title: form.meta_title.trim() || null, meta_description: form.meta_description.trim() || null, meta_keywords: form.meta_keywords.trim() || null,
       };
       if (editing) {
         const { error } = await supabase.from("drivers").update(payload).eq("id", editing.id);
@@ -45,31 +41,19 @@ export default function AdminDrivers() {
         if (error) throw error;
       }
     },
-    onSuccess: () => {
-      toast.success(editing ? "Driver atualizado!" : "Driver cadastrado!");
-      qc.invalidateQueries({ queryKey: ["admin-drivers"] });
-      resetForm();
-    },
+    onSuccess: () => { toast.success(editing ? "Driver atualizado!" : "Driver cadastrado!"); qc.invalidateQueries({ queryKey: ["admin-drivers"] }); resetForm(); },
     onError: () => toast.error("Erro ao salvar"),
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from("drivers").delete().eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      toast.success("Driver removido!");
-      qc.invalidateQueries({ queryKey: ["admin-drivers"] });
-    },
+    mutationFn: async (id: string) => { const { error } = await supabase.from("drivers").delete().eq("id", id); if (error) throw error; },
+    onSuccess: () => { toast.success("Driver removido!"); qc.invalidateQueries({ queryKey: ["admin-drivers"] }); },
   });
 
   const resetForm = () => { setForm(emptyForm); setEditing(null); setCreating(false); };
-
-  const startEdit = (d: Driver) => {
-    setEditing(d);
-    setCreating(true);
-    setForm({ marca: d.marca, modelo: d.modelo, nome: d.nome, versao: d.versao, sistema_operacional: d.sistema_operacional, link_download: d.link_download, ativo: d.ativo });
+  const startEdit = (d: any) => {
+    setEditing(d); setCreating(true);
+    setForm({ marca: d.marca, modelo: d.modelo, nome: d.nome, versao: d.versao, sistema_operacional: d.sistema_operacional, link_download: d.link_download, ativo: d.ativo, conteudo: d.conteudo || "", meta_title: d.meta_title || "", meta_description: d.meta_description || "", meta_keywords: d.meta_keywords || "" });
   };
 
   return (
@@ -78,11 +62,10 @@ export default function AdminDrivers() {
         <h1 className="font-heading text-2xl font-bold text-foreground">Drivers</h1>
         {!creating && <Button onClick={() => { resetForm(); setCreating(true); }}><Plus className="h-4 w-4 mr-2" /> Novo Driver</Button>}
       </div>
-
       {creating && (
         <div className="bg-background rounded-lg border border-border p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-heading font-bold">{editing ? "Editar Driver" : "Novo Driver"}</h2>
+            <h2 className="font-heading font-bold">{editing ? "Editar" : "Novo"} Driver</h2>
             <button onClick={resetForm}><X className="h-5 w-5 text-muted-foreground" /></button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -96,6 +79,11 @@ export default function AdminDrivers() {
               <input type="checkbox" checked={form.ativo} onChange={(e) => setForm({ ...form, ativo: e.target.checked })} id="ativo" />
               <Label htmlFor="ativo">Ativo</Label>
             </div>
+            <div className="sm:col-span-2">
+              <Label>Conteúdo / Instruções</Label>
+              <RichTextEditor value={form.conteudo} onChange={(html) => setForm({ ...form, conteudo: html })} folder="drivers" />
+            </div>
+            <SEOFields metaTitle={form.meta_title} metaDescription={form.meta_description} metaKeywords={form.meta_keywords} onChange={(field, value) => setForm({ ...form, [field]: value })} />
           </div>
           <div className="flex gap-3 mt-4">
             <Button onClick={() => saveMutation.mutate()} disabled={!form.marca.trim() || !form.modelo.trim() || !form.nome.trim() || !form.link_download.trim() || saveMutation.isPending}>
@@ -105,10 +93,9 @@ export default function AdminDrivers() {
           </div>
         </div>
       )}
-
       {isLoading ? <p className="text-muted-foreground">Carregando...</p> : (
         <div className="space-y-2">
-          {(drivers || []).map((d) => (
+          {(drivers || []).map((d: any) => (
             <div key={d.id} className="flex items-center gap-4 bg-background rounded-md border border-border px-4 py-3">
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-foreground">{d.nome}</p>

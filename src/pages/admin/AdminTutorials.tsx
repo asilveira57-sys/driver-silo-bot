@@ -4,18 +4,17 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { SEOFields } from "@/components/admin/SEOFields";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
-import type { Database } from "@/integrations/supabase/types";
 
-type Tutorial = Database["public"]["Tables"]["tutorials"]["Row"];
-const emptyForm = { titulo: "", slug: "", conteudo: "", categoria: "", imagens: [] as string[] };
+const emptyForm = { titulo: "", slug: "", conteudo: "", categoria: "", imagens: [] as string[], meta_title: "", meta_description: "", meta_keywords: "" };
 
 export default function AdminTutorials() {
   const qc = useQueryClient();
-  const [editing, setEditing] = useState<Tutorial | null>(null);
+  const [editing, setEditing] = useState<any>(null);
   const [creating, setCreating] = useState(false);
   const [form, setForm] = useState(emptyForm);
 
@@ -29,12 +28,10 @@ export default function AdminTutorials() {
 
   const saveMutation = useMutation({
     mutationFn: async () => {
-      const payload = {
-        titulo: form.titulo.trim(),
-        slug: form.slug.trim(),
-        conteudo: form.conteudo.trim(),
-        categoria: form.categoria.trim(),
+      const payload: any = {
+        titulo: form.titulo.trim(), slug: form.slug.trim(), conteudo: form.conteudo, categoria: form.categoria.trim(),
         imagem_url: form.imagens[0] || null,
+        meta_title: form.meta_title.trim() || null, meta_description: form.meta_description.trim() || null, meta_keywords: form.meta_keywords.trim() || null,
       };
       if (editing) {
         const { error } = await supabase.from("tutorials").update(payload).eq("id", editing.id);
@@ -54,9 +51,9 @@ export default function AdminTutorials() {
   });
 
   const resetForm = () => { setForm(emptyForm); setEditing(null); setCreating(false); };
-  const startEdit = (t: Tutorial) => {
+  const startEdit = (t: any) => {
     setEditing(t); setCreating(true);
-    setForm({ titulo: t.titulo, slug: t.slug, conteudo: t.conteudo, categoria: t.categoria, imagens: t.imagem_url ? [t.imagem_url] : [] });
+    setForm({ titulo: t.titulo, slug: t.slug, conteudo: t.conteudo, categoria: t.categoria, imagens: t.imagem_url ? [t.imagem_url] : [], meta_title: t.meta_title || "", meta_description: t.meta_description || "", meta_keywords: t.meta_keywords || "" });
   };
 
   const generateSlug = () => {
@@ -80,16 +77,13 @@ export default function AdminTutorials() {
             <div><Label>Slug</Label><div className="flex gap-2"><Input value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} /><Button type="button" variant="outline" size="sm" onClick={generateSlug}>Gerar</Button></div></div>
             <div><Label>Categoria</Label><Input value={form.categoria} onChange={(e) => setForm({ ...form, categoria: e.target.value })} placeholder="Ex: Instalação" /></div>
             <div className="sm:col-span-2">
-              <ImageUpload
-                value={form.imagens}
-                onChange={(urls) => setForm({ ...form, imagens: urls })}
-                max={1}
-                folder="tutorials"
-                label="Imagem de Capa"
-                hint="Tamanho ideal: 1200×630px"
-              />
+              <ImageUpload value={form.imagens} onChange={(urls) => setForm({ ...form, imagens: urls })} max={1} folder="tutorials" label="Imagem de Capa" hint="Tamanho ideal: 1200×630px" />
             </div>
-            <div className="sm:col-span-2"><Label>Conteúdo</Label><Textarea value={form.conteudo} onChange={(e) => setForm({ ...form, conteudo: e.target.value })} rows={10} /></div>
+            <div className="sm:col-span-2">
+              <Label>Conteúdo</Label>
+              <RichTextEditor value={form.conteudo} onChange={(html) => setForm({ ...form, conteudo: html })} folder="tutorials" />
+            </div>
+            <SEOFields metaTitle={form.meta_title} metaDescription={form.meta_description} metaKeywords={form.meta_keywords} onChange={(field, value) => setForm({ ...form, [field]: value })} />
           </div>
           <div className="flex gap-3 mt-4">
             <Button onClick={() => saveMutation.mutate()} disabled={!form.titulo.trim() || !form.slug.trim() || !form.conteudo.trim() || saveMutation.isPending}>{saveMutation.isPending ? "Salvando..." : "Salvar"}</Button>
@@ -99,7 +93,7 @@ export default function AdminTutorials() {
       )}
       {isLoading ? <p className="text-muted-foreground">Carregando...</p> : (
         <div className="space-y-2">
-          {(items || []).map((t) => (
+          {(items || []).map((t: any) => (
             <div key={t.id} className="flex items-center gap-4 bg-background rounded-md border border-border px-4 py-3">
               {t.imagem_url && <img src={t.imagem_url} alt={t.titulo} className="h-10 w-10 object-cover rounded" />}
               <div className="flex-1"><p className="font-medium text-foreground">{t.titulo}</p><p className="text-xs text-muted-foreground">{t.categoria} · /{t.slug}</p></div>

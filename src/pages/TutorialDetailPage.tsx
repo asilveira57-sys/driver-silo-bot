@@ -6,6 +6,7 @@ import { SEOHead } from "@/components/SEOHead";
 import { ConversionBanner } from "@/components/ConversionBanner";
 import { RelatedSidebar } from "@/components/RelatedSidebar";
 import { ChevronRight, BookOpen, Calendar } from "lucide-react";
+import DOMPurify from "dompurify";
 
 export default function TutorialDetailPage() {
   const { slug } = useParams();
@@ -28,16 +29,23 @@ export default function TutorialDetailPage() {
     enabled: !!tutorial?.categoria,
   });
 
+  const t = tutorial as any;
+  const sanitized = tutorial ? DOMPurify.sanitize(tutorial.conteudo) : "";
+  const isHtml = sanitized.includes("<");
+
   return (
     <Layout>
       <SEOHead
-        title={tutorial?.titulo || "Tutorial"}
-        description={tutorial ? tutorial.conteudo.substring(0, 155) : "Tutorial técnico para impressoras térmicas."}
+        title={t?.meta_title || tutorial?.titulo || "Tutorial"}
+        description={t?.meta_description || (tutorial ? tutorial.conteudo.replace(/<[^>]*>/g, "").substring(0, 155) : "Tutorial técnico para impressoras térmicas.")}
+        keywords={t?.meta_keywords}
+        ogImage={tutorial?.imagem_url || undefined}
         jsonLd={tutorial ? {
           "@context": "https://schema.org",
           "@type": "Article",
           headline: tutorial.titulo,
           datePublished: tutorial.created_at,
+          image: tutorial.imagem_url,
           author: { "@type": "Organization", name: "Adeconex" },
         } : undefined}
       />
@@ -65,8 +73,12 @@ export default function TutorialDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             {tutorial ? (
-              <article className="silo-card prose prose-slate max-w-none">
-                <div className="whitespace-pre-wrap text-foreground leading-relaxed">{tutorial.conteudo}</div>
+              <article className="silo-card">
+                {isHtml ? (
+                  <div className="prose prose-slate max-w-none text-foreground [&_h1]:font-heading [&_h2]:font-heading [&_h3]:font-heading [&_a]:text-primary" dangerouslySetInnerHTML={{ __html: sanitized }} />
+                ) : (
+                  <div className="whitespace-pre-wrap text-foreground leading-relaxed">{tutorial.conteudo}</div>
+                )}
               </article>
             ) : (
               <div className="text-center py-20">
@@ -78,14 +90,7 @@ export default function TutorialDetailPage() {
           </div>
           <div className="space-y-6">
             {related && related.length > 0 && (
-              <RelatedSidebar
-                title="Tutoriais Relacionados"
-                links={related.map((r) => ({
-                  label: r.titulo,
-                  href: `/tutoriais/${r.slug}`,
-                  type: "tutorial" as const,
-                }))}
-              />
+              <RelatedSidebar title="Tutoriais Relacionados" links={related.map((r) => ({ label: r.titulo, href: `/tutoriais/${r.slug}`, type: "tutorial" as const }))} />
             )}
           </div>
         </div>

@@ -4,17 +4,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { SEOFields } from "@/components/admin/SEOFields";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
-import type { Database } from "@/integrations/supabase/types";
 
-type Software = Database["public"]["Tables"]["softwares"]["Row"];
-const emptyForm = { nome: "", descricao: "", versao: "", link_download: "" };
+const emptyForm = { nome: "", descricao: "", versao: "", link_download: "", conteudo: "", meta_title: "", meta_description: "", meta_keywords: "" };
 
 export default function AdminSoftwares() {
   const qc = useQueryClient();
-  const [editing, setEditing] = useState<Software | null>(null);
+  const [editing, setEditing] = useState<any>(null);
   const [creating, setCreating] = useState(false);
   const [form, setForm] = useState(emptyForm);
 
@@ -28,7 +27,11 @@ export default function AdminSoftwares() {
 
   const saveMutation = useMutation({
     mutationFn: async () => {
-      const payload = { nome: form.nome.trim(), descricao: form.descricao.trim() || null, versao: form.versao.trim(), link_download: form.link_download.trim() };
+      const payload: any = {
+        nome: form.nome.trim(), descricao: form.descricao.trim() || null, versao: form.versao.trim(), link_download: form.link_download.trim(),
+        conteudo: form.conteudo || null,
+        meta_title: form.meta_title.trim() || null, meta_description: form.meta_description.trim() || null, meta_keywords: form.meta_keywords.trim() || null,
+      };
       if (editing) {
         const { error } = await supabase.from("softwares").update(payload).eq("id", editing.id);
         if (error) throw error;
@@ -47,7 +50,10 @@ export default function AdminSoftwares() {
   });
 
   const resetForm = () => { setForm(emptyForm); setEditing(null); setCreating(false); };
-  const startEdit = (s: Software) => { setEditing(s); setCreating(true); setForm({ nome: s.nome, descricao: s.descricao || "", versao: s.versao, link_download: s.link_download }); };
+  const startEdit = (s: any) => {
+    setEditing(s); setCreating(true);
+    setForm({ nome: s.nome, descricao: s.descricao || "", versao: s.versao, link_download: s.link_download, conteudo: s.conteudo || "", meta_title: s.meta_title || "", meta_description: s.meta_description || "", meta_keywords: s.meta_keywords || "" });
+  };
 
   return (
     <div>
@@ -65,7 +71,12 @@ export default function AdminSoftwares() {
             <div><Label>Nome</Label><Input value={form.nome} onChange={(e) => setForm({ ...form, nome: e.target.value })} /></div>
             <div><Label>Versão</Label><Input value={form.versao} onChange={(e) => setForm({ ...form, versao: e.target.value })} /></div>
             <div className="sm:col-span-2"><Label>Link Download</Label><Input value={form.link_download} onChange={(e) => setForm({ ...form, link_download: e.target.value })} /></div>
-            <div className="sm:col-span-2"><Label>Descrição</Label><Textarea value={form.descricao} onChange={(e) => setForm({ ...form, descricao: e.target.value })} rows={3} /></div>
+            <div className="sm:col-span-2"><Label>Descrição Breve</Label><Input value={form.descricao} onChange={(e) => setForm({ ...form, descricao: e.target.value })} placeholder="Breve descrição para listagens" /></div>
+            <div className="sm:col-span-2">
+              <Label>Conteúdo Completo</Label>
+              <RichTextEditor value={form.conteudo} onChange={(html) => setForm({ ...form, conteudo: html })} folder="softwares" />
+            </div>
+            <SEOFields metaTitle={form.meta_title} metaDescription={form.meta_description} metaKeywords={form.meta_keywords} onChange={(field, value) => setForm({ ...form, [field]: value })} />
           </div>
           <div className="flex gap-3 mt-4">
             <Button onClick={() => saveMutation.mutate()} disabled={!form.nome.trim() || !form.link_download.trim() || saveMutation.isPending}>{saveMutation.isPending ? "Salvando..." : "Salvar"}</Button>
@@ -75,7 +86,7 @@ export default function AdminSoftwares() {
       )}
       {isLoading ? <p className="text-muted-foreground">Carregando...</p> : (
         <div className="space-y-2">
-          {(items || []).map((s) => (
+          {(items || []).map((s: any) => (
             <div key={s.id} className="flex items-center gap-4 bg-background rounded-md border border-border px-4 py-3">
               <div className="flex-1"><p className="font-medium text-foreground">{s.nome}</p><p className="text-xs text-muted-foreground">v{s.versao}</p></div>
               <div className="flex gap-2">
