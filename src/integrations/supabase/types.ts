@@ -21,6 +21,9 @@ export type Database = {
           created_at: string
           id: string
           imagem_url: string | null
+          meta_description: string | null
+          meta_keywords: string | null
+          meta_title: string | null
           publicado: boolean
           resumo: string | null
           slug: string
@@ -33,6 +36,9 @@ export type Database = {
           created_at?: string
           id?: string
           imagem_url?: string | null
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
           publicado?: boolean
           resumo?: string | null
           slug: string
@@ -45,6 +51,9 @@ export type Database = {
           created_at?: string
           id?: string
           imagem_url?: string | null
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
           publicado?: boolean
           resumo?: string | null
           slug?: string
@@ -85,11 +94,15 @@ export type Database = {
       drivers: {
         Row: {
           ativo: boolean
+          conteudo: string | null
           created_at: string
           data_publicacao: string
           id: string
           link_download: string
           marca: string
+          meta_description: string | null
+          meta_keywords: string | null
+          meta_title: string | null
           modelo: string
           nome: string
           sistema_operacional: string
@@ -97,11 +110,15 @@ export type Database = {
         }
         Insert: {
           ativo?: boolean
+          conteudo?: string | null
           created_at?: string
           data_publicacao?: string
           id?: string
           link_download: string
           marca: string
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
           modelo: string
           nome: string
           sistema_operacional: string
@@ -109,11 +126,15 @@ export type Database = {
         }
         Update: {
           ativo?: boolean
+          conteudo?: string | null
           created_at?: string
           data_publicacao?: string
           id?: string
           link_download?: string
           marca?: string
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
           modelo?: string
           nome?: string
           sistema_operacional?: string
@@ -153,56 +174,80 @@ export type Database = {
       }
       printers: {
         Row: {
+          conteudo: string | null
           created_at: string
           descricao: string | null
           id: string
           imagem_url: string | null
           imagens: string[] | null
           marca: string
+          meta_description: string | null
+          meta_keywords: string | null
+          meta_title: string | null
           modelo: string
         }
         Insert: {
+          conteudo?: string | null
           created_at?: string
           descricao?: string | null
           id?: string
           imagem_url?: string | null
           imagens?: string[] | null
           marca: string
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
           modelo: string
         }
         Update: {
+          conteudo?: string | null
           created_at?: string
           descricao?: string | null
           id?: string
           imagem_url?: string | null
           imagens?: string[] | null
           marca?: string
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
           modelo?: string
         }
         Relationships: []
       }
       softwares: {
         Row: {
+          conteudo: string | null
           created_at: string
           descricao: string | null
           id: string
           link_download: string
+          meta_description: string | null
+          meta_keywords: string | null
+          meta_title: string | null
           nome: string
           versao: string
         }
         Insert: {
+          conteudo?: string | null
           created_at?: string
           descricao?: string | null
           id?: string
           link_download: string
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
           nome: string
           versao: string
         }
         Update: {
+          conteudo?: string | null
           created_at?: string
           descricao?: string | null
           id?: string
           link_download?: string
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
           nome?: string
           versao?: string
         }
@@ -215,6 +260,9 @@ export type Database = {
           created_at: string
           id: string
           imagem_url: string | null
+          meta_description: string | null
+          meta_keywords: string | null
+          meta_title: string | null
           slug: string
           titulo: string
         }
@@ -224,6 +272,9 @@ export type Database = {
           created_at?: string
           id?: string
           imagem_url?: string | null
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
           slug: string
           titulo: string
         }
@@ -233,6 +284,9 @@ export type Database = {
           created_at?: string
           id?: string
           imagem_url?: string | null
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
           slug?: string
           titulo?: string
         }
