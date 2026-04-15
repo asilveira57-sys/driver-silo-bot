@@ -6,10 +6,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { SEOFields } from "@/components/admin/SEOFields";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
 
-const emptyForm = { nome: "", categoria: "", descricao: "", link_produto: "", imagens: [] as string[] };
+const emptyForm = {
+  nome: "", categoria: "", descricao: "", link_produto: "", imagens: [] as string[],
+  conteudo: "", slug: "", meta_title: "", meta_description: "", meta_keywords: "",
+};
+
+function generateSlug(text: string) {
+  return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
 
 export default function AdminMaterials() {
   const qc = useQueryClient();
@@ -27,11 +35,17 @@ export default function AdminMaterials() {
 
   const saveMutation = useMutation({
     mutationFn: async () => {
-      const payload = {
+      const slug = form.slug.trim() || generateSlug(form.nome);
+      const payload: any = {
         nome: form.nome.trim(), categoria: form.categoria.trim(),
         descricao: form.descricao || null,
+        conteudo: form.conteudo || null,
         link_produto: form.link_produto.trim() || null,
         imagem_url: form.imagens[0] || null,
+        slug,
+        meta_title: form.meta_title.trim() || null,
+        meta_description: form.meta_description.trim() || null,
+        meta_keywords: form.meta_keywords.trim() || null,
       };
       if (editing) {
         const { error } = await supabase.from("materials").update(payload).eq("id", editing.id);
@@ -53,7 +67,12 @@ export default function AdminMaterials() {
   const resetForm = () => { setForm(emptyForm); setEditing(null); setCreating(false); };
   const startEdit = (m: any) => {
     setEditing(m); setCreating(true);
-    setForm({ nome: m.nome, categoria: m.categoria, descricao: m.descricao || "", link_produto: m.link_produto || "", imagens: m.imagem_url ? [m.imagem_url] : [] });
+    setForm({
+      nome: m.nome, categoria: m.categoria, descricao: m.descricao || "",
+      link_produto: m.link_produto || "", imagens: m.imagem_url ? [m.imagem_url] : [],
+      conteudo: m.conteudo || "", slug: m.slug || "",
+      meta_title: m.meta_title || "", meta_description: m.meta_description || "", meta_keywords: m.meta_keywords || "",
+    });
   };
 
   return (
@@ -71,14 +90,23 @@ export default function AdminMaterials() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div><Label>Nome</Label><Input value={form.nome} onChange={(e) => setForm({ ...form, nome: e.target.value })} /></div>
             <div><Label>Categoria</Label><Input value={form.categoria} onChange={(e) => setForm({ ...form, categoria: e.target.value })} placeholder="Ex: Etiqueta, Ribbon" /></div>
-            <div className="sm:col-span-2"><Label>Link do Produto</Label><Input value={form.link_produto} onChange={(e) => setForm({ ...form, link_produto: e.target.value })} /></div>
+            <div><Label>Slug (URL)</Label><Input value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} placeholder="Auto-gerado se vazio" /></div>
+            <div><Label>Link do Produto</Label><Input value={form.link_produto} onChange={(e) => setForm({ ...form, link_produto: e.target.value })} /></div>
             <div className="sm:col-span-2">
               <ImageUpload value={form.imagens} onChange={(urls) => setForm({ ...form, imagens: urls })} max={3} folder="materials" label="Imagens do Material" hint="Tamanho ideal: 800×800px. Máximo 3 imagens." />
             </div>
             <div className="sm:col-span-2">
-              <Label>Descrição</Label>
-              <RichTextEditor value={form.descricao} onChange={(html) => setForm({ ...form, descricao: html })} folder="materials" />
+              <Label>Descrição Breve</Label>
+              <Input value={form.descricao} onChange={(e) => setForm({ ...form, descricao: e.target.value })} placeholder="Breve descrição para listagens" />
             </div>
+            <div className="sm:col-span-2">
+              <Label>Conteúdo Completo</Label>
+              <RichTextEditor value={form.conteudo} onChange={(html) => setForm({ ...form, conteudo: html })} folder="materials" />
+            </div>
+            <SEOFields
+              metaTitle={form.meta_title} metaDescription={form.meta_description} metaKeywords={form.meta_keywords}
+              onChange={(field, value) => setForm({ ...form, [field]: value })}
+            />
           </div>
           <div className="flex gap-3 mt-4">
             <Button onClick={() => saveMutation.mutate()} disabled={!form.nome.trim() || !form.categoria.trim() || saveMutation.isPending}>{saveMutation.isPending ? "Salvando..." : "Salvar"}</Button>
