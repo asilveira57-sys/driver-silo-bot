@@ -145,30 +145,45 @@ export type Database = {
       materials: {
         Row: {
           categoria: string
+          conteudo: string | null
           created_at: string
           descricao: string | null
           id: string
           imagem_url: string | null
           link_produto: string | null
+          meta_description: string | null
+          meta_keywords: string | null
+          meta_title: string | null
           nome: string
+          slug: string | null
         }
         Insert: {
           categoria: string
+          conteudo?: string | null
           created_at?: string
           descricao?: string | null
           id?: string
           imagem_url?: string | null
           link_produto?: string | null
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
           nome: string
+          slug?: string | null
         }
         Update: {
           categoria?: string
+          conteudo?: string | null
           created_at?: string
           descricao?: string | null
           id?: string
           imagem_url?: string | null
           link_produto?: string | null
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
           nome?: string
+          slug?: string | null
         }
         Relationships: []
       }
