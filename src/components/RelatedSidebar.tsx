@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { ChevronRight, Download, BookOpen, Printer } from "lucide-react";
+import { ChevronRight, Download, BookOpen, Printer, Package } from "lucide-react";
 
 interface SidebarLink {
   label: string;
   href: string;
-  type?: "driver" | "tutorial" | "printer";
+  type?: "driver" | "tutorial" | "printer" | "material";
 }
 
 interface RelatedSidebarProps {
@@ -16,6 +16,7 @@ const iconMap = {
   driver: Download,
   tutorial: BookOpen,
   printer: Printer,
+  material: Package,
 };
 
 export function RelatedSidebar({ title = "Relacionados", links }: RelatedSidebarProps) {
