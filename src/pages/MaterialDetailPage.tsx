@@ -6,7 +6,7 @@ import { SEOHead } from "@/components/SEOHead";
 import { ConversionBanner } from "@/components/ConversionBanner";
 import { RelatedSidebar } from "@/components/RelatedSidebar";
 import { Package, ChevronRight } from "lucide-react";
-import DOMPurify from "dompurify";
+import { sanitizeContent } from "@/lib/htmlUtils";
 
 export default function MaterialDetailPage() {
   const { slug } = useParams();
@@ -40,7 +40,7 @@ export default function MaterialDetailPage() {
   });
 
   const m = material as any;
-  const richContent = m?.conteudo ? DOMPurify.sanitize(m.conteudo) : "";
+  const richContent = sanitizeContent(m?.conteudo);
 
   return (
     <Layout>

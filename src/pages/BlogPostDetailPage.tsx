@@ -6,7 +6,7 @@ import { SEOHead } from "@/components/SEOHead";
 import { ConversionBanner } from "@/components/ConversionBanner";
 import { RelatedSidebar } from "@/components/RelatedSidebar";
 import { ChevronRight, Calendar, BookOpen } from "lucide-react";
-import DOMPurify from "dompurify";
+import { sanitizeContent } from "@/lib/htmlUtils";
 
 export default function BlogPostDetailPage() {
   const { slug } = useParams();
@@ -29,7 +29,7 @@ export default function BlogPostDetailPage() {
     enabled: !!post?.categoria,
   });
 
-  const sanitizedContent = post ? DOMPurify.sanitize(post.conteudo) : "";
+  const sanitizedContent = sanitizeContent(post?.conteudo);
 
   return (
     <Layout>

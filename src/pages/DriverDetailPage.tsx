@@ -6,7 +6,7 @@ import { SEOHead } from "@/components/SEOHead";
 import { ConversionBanner } from "@/components/ConversionBanner";
 import { RelatedSidebar } from "@/components/RelatedSidebar";
 import { Download, Monitor, Calendar, ChevronRight, AlertTriangle } from "lucide-react";
-import DOMPurify from "dompurify";
+import { sanitizeContent } from "@/lib/htmlUtils";
 
 export default function DriverDetailPage() {
   const { modelo } = useParams();
@@ -33,7 +33,7 @@ export default function DriverDetailPage() {
 
   const mainDriver = drivers?.[0] as any;
   const displayName = mainDriver ? `${mainDriver.marca} ${mainDriver.modelo}` : modeloNorm;
-  const richContent = mainDriver?.conteudo ? DOMPurify.sanitize(mainDriver.conteudo) : "";
+  const richContent = sanitizeContent(mainDriver?.conteudo);
 
   const handleDownload = async (driverId: string) => {
     await supabase.from("download_logs").insert({ driver_id: driverId });
