@@ -1,66 +1,30 @@
+## Problema
 
+O editor rico (RichTextEditor) tem um modo "Código Fonte HTML" (botão FileCode), mas:
 
-## Plano: Blog e Admin com Editor Rico + SEO Completo
+1. **HTML colado não é salvo** — Se você cola HTML no campo de código-fonte e clica "Salvar" sem voltar ao modo visual, o HTML não é enviado ao formulário (o `onChange` só dispara ao alternar de volta)
+2. **Atributo `alt` nas imagens é perdido** — A extensão Image do TipTap não está configurada para preservar o atributo `alt`, essencial para SEO
+3. **Alguns elementos HTML podem ser removidos** — O TipTap limpa tags que não fazem parte do seu schema (ex: `<table>`, `<iframe>`)
 
-### Problema Atual
-- Todos os formulários admin (blog, tutoriais, impressoras, softwares, drivers) usam `<Textarea>` simples — texto puro, sem formatação
-- Sem campos de SEO (meta title, meta description, meta keywords)
-- Sem editor rico: sem H1/H2/H3, sem bullet points, sem inserção de imagens inline, sem colar HTML/script
-- Páginas de detalhe renderizam conteúdo como texto puro (`whitespace-pre-wrap`)
-- Blog não tem página de detalhe individual (`/blog/:slug`)
+## Solução
 
-### Solução
+### 1. Sincronizar modo código-fonte em tempo real
+- O textarea do modo fonte vai chamar `onChange(sourceCode)` a cada alteração, não apenas ao alternar de volta
+- Isso garante que colar HTML e clicar Salvar funcione corretamente
 
-#### 1. Instalar Editor Rico (TipTap)
-- Adicionar `@tiptap/react`, `@tiptap/starter-kit`, extensões para imagens, links, headings
-- Criar componente `RichTextEditor` reutilizável com toolbar visual:
-  - **Headings**: H1, H2, H3
-  - **Formatação**: Negrito, Itálico, Sublinhado
-  - **Listas**: Bullet points, listas numeradas
-  - **Mídia**: Inserir imagem (upload via storage ou URL)
-  - **Links**: Inserir/editar links
-  - **HTML**: Botão para alternar entre visual e código-fonte (colar scripts/HTML)
-- O editor salva HTML no banco; as páginas de detalhe renderizam HTML sanitizado
+### 2. Suporte a `alt` e `title` em imagens
+- Configurar a extensão Image do TipTap para aceitar atributos `alt` e `title`
+- Adicionar campo de `alt` no input de inserção de imagem (URL e upload)
+- Imagens coladas via HTML preservarão seus atributos `alt`
 
-#### 2. Adicionar Campos SEO na Tabela `blog_posts`
-- Migration: adicionar colunas `meta_title`, `meta_description`, `meta_keywords` (todos `text`, nullable)
-- Mesma migration para tabela `tutorials`: adicionar `meta_title`, `meta_description`, `meta_keywords`
-- Mesma migration para `printers`: adicionar `meta_title`, `meta_description`, `meta_keywords`, `conteudo` (HTML rico para descrição completa)
-- Mesma migration para `softwares`: adicionar `meta_title`, `meta_description`, `meta_keywords`, `conteudo`
-- Mesma migration para `drivers`: adicionar `meta_title`, `meta_description`, `meta_keywords`, `conteudo`
+### 3. Melhorar a experiência do modo fonte
+- Adicionar indicação visual clara de quando está no modo fonte (destaque/badge)
+- O editor vai aceitar HTML arbitrário no modo fonte — ao voltar ao visual, o TipTap renderiza o que consegue, mas o HTML original é preservado no campo `conteudo`
 
-#### 3. Atualizar Todos os Formulários Admin
-Cada formulário admin ganha:
-- **Seção SEO** (colapsável): Meta Title, Meta Description, Meta Keywords
-- **Editor Rico** no lugar do Textarea para conteúdo/descrição
-- Blog e Tutoriais: editor rico no campo "Conteúdo"
-- Impressoras, Softwares, Drivers: editor rico no campo "Descrição" (que vira "Conteúdo")
+## Arquivos alterados
 
-#### 4. Criar Página de Detalhe do Blog (`/blog/:slug`)
-- Nova rota `/blog/:slug` → `BlogPostDetailPage`
-- SEO completo: usa `meta_title` ou `titulo`, `meta_description` ou `resumo`, `meta_keywords`
-- JSON-LD com schema Article
-- Renderização do HTML do editor com `dangerouslySetInnerHTML` + sanitização (DOMPurify)
-- Sidebar com posts relacionados da mesma categoria
+- `src/components/admin/RichTextEditor.tsx` — todas as correções acima
 
-#### 5. Atualizar BlogPage (listagem)
-- Buscar posts publicados do banco
-- Exibir cards com imagem de capa, título, resumo, categoria, data
-- Links para `/blog/:slug`
+## Impacto
 
-#### 6. Atualizar Páginas de Detalhe Existentes
-- `TutorialDetailPage`, `PrinterDetailPage`, `SoftwareDetailPage`, `DriverDetailPage`:
-  - Renderizar conteúdo como HTML (não mais `whitespace-pre-wrap`)
-  - Usar meta tags SEO dos campos do banco
-  - Adicionar `meta keywords` ao `SEOHead`
-
-#### 7. Atualizar `SEOHead` Component
-- Adicionar suporte a `keywords` (meta tag)
-- Adicionar Open Graph tags (`og:title`, `og:description`, `og:image`)
-
-### Arquivos Afetados
-- **Novos**: `src/components/admin/RichTextEditor.tsx`, `src/pages/BlogPostDetailPage.tsx`
-- **Migration**: 1 migration SQL com todas as colunas novas
-- **Editados**: `AdminBlog.tsx`, `AdminTutorials.tsx`, `AdminPrinters.tsx`, `AdminSoftwares.tsx`, `AdminDrivers.tsx`, `BlogPage.tsx`, `TutorialDetailPage.tsx`, `PrinterDetailPage.tsx`, `SoftwareDetailPage.tsx`, `DriverDetailPage.tsx`, `SEOHead.tsx`, `App.tsx`
-- **Dependências**: `@tiptap/react`, `@tiptap/starter-kit`, `@tiptap/extension-image`, `@tiptap/extension-link`, `@tiptap/extension-underline`, `@tiptap/extension-text-align`, `@tiptap/extension-placeholder`, `dompurify`
-
+Funciona em todos os cadastros que já usam o RichTextEditor: Blog, Impressoras, Drivers, Softwares, Tutoriais e Materiais.
