@@ -6,7 +6,7 @@ import { SEOHead } from "@/components/SEOHead";
 import { ConversionBanner } from "@/components/ConversionBanner";
 import { RelatedSidebar } from "@/components/RelatedSidebar";
 import { Printer, Download, BookOpen, ChevronRight } from "lucide-react";
-import DOMPurify from "dompurify";
+import { sanitizeContent } from "@/lib/htmlUtils";
 
 export default function PrinterDetailPage() {
   const { marca, modelo } = useParams();
@@ -40,7 +40,7 @@ export default function PrinterDetailPage() {
 
   const p = printer as any;
   const displayName = printer ? `${printer.marca} ${printer.modelo}` : `${marca} ${modelo?.replace(/-/g, " ")}`;
-  const richContent = p?.conteudo ? DOMPurify.sanitize(p.conteudo) : "";
+  const richContent = sanitizeContent(p?.conteudo);
 
   return (
     <Layout>

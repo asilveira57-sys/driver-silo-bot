@@ -5,7 +5,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEOHead } from "@/components/SEOHead";
 import { ConversionBanner } from "@/components/ConversionBanner";
 import { Download, ChevronRight, Package } from "lucide-react";
-import DOMPurify from "dompurify";
+import { sanitizeContent } from "@/lib/htmlUtils";
 
 export default function SoftwareDetailPage() {
   const { nome } = useParams();
@@ -21,7 +21,7 @@ export default function SoftwareDetailPage() {
   });
 
   const s = software as any;
-  const richContent = s?.conteudo ? DOMPurify.sanitize(s.conteudo) : "";
+  const richContent = sanitizeContent(s?.conteudo);
 
   return (
     <Layout>

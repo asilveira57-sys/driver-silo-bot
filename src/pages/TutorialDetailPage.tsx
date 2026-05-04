@@ -6,7 +6,7 @@ import { SEOHead } from "@/components/SEOHead";
 import { ConversionBanner } from "@/components/ConversionBanner";
 import { RelatedSidebar } from "@/components/RelatedSidebar";
 import { ChevronRight, BookOpen, Calendar } from "lucide-react";
-import DOMPurify from "dompurify";
+import { sanitizeContent } from "@/lib/htmlUtils";
 
 export default function TutorialDetailPage() {
   const { slug } = useParams();
@@ -30,7 +30,7 @@ export default function TutorialDetailPage() {
   });
 
   const t = tutorial as any;
-  const sanitized = tutorial ? DOMPurify.sanitize(tutorial.conteudo) : "";
+  const sanitized = sanitizeContent(tutorial?.conteudo);
   const isHtml = sanitized.includes("<");
 
   return (
