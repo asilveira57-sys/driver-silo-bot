@@ -105,7 +105,7 @@ export default function AdminMaterials() {
             </div>
             <SEOFields
               metaTitle={form.meta_title} metaDescription={form.meta_description} metaKeywords={form.meta_keywords}
-              onChange={(field, value) => setForm({ ...form, [field]: value })}
+              onChange={(field, value) => setForm((prev) => ({ ...prev, [field]: value }))}
               titulo={form.nome} conteudo={form.conteudo || form.descricao}
               contexto={`Material/insumo: ${form.categoria || "etiquetas/ribbons"}`}
             />

@@ -84,7 +84,7 @@ export default function AdminPrinters() {
               <Label>Conteúdo Completo</Label>
               <RichTextEditor value={form.conteudo} onChange={(html) => setForm({ ...form, conteudo: html })} folder="printers" />
             </div>
-            <SEOFields metaTitle={form.meta_title} metaDescription={form.meta_description} metaKeywords={form.meta_keywords} onChange={(field, value) => setForm({ ...form, [field]: value })} titulo={`${form.marca} ${form.modelo}`.trim()} conteudo={form.conteudo || form.descricao} contexto="Página de impressora térmica" />
+            <SEOFields metaTitle={form.meta_title} metaDescription={form.meta_description} metaKeywords={form.meta_keywords} onChange={(field, value) => setForm((prev) => ({ ...prev, [field]: value }))} titulo={`${form.marca} ${form.modelo}`.trim()} conteudo={form.conteudo || form.descricao} contexto="Página de impressora térmica" />
           </div>
           <div className="flex gap-3 mt-4">
             <Button onClick={() => saveMutation.mutate()} disabled={!form.marca.trim() || !form.modelo.trim() || saveMutation.isPending}>{saveMutation.isPending ? "Salvando..." : "Salvar"}</Button>
