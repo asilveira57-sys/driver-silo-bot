@@ -92,7 +92,7 @@ export default function AdminBlog() {
               <Label>Conteúdo</Label>
               <RichTextEditor value={form.conteudo} onChange={(html) => setForm({ ...form, conteudo: html })} folder="blog" />
             </div>
-            <SEOFields metaTitle={form.meta_title} metaDescription={form.meta_description} metaKeywords={form.meta_keywords} onChange={(field, value) => setForm({ ...form, [field]: value })} />
+            <SEOFields metaTitle={form.meta_title} metaDescription={form.meta_description} metaKeywords={form.meta_keywords} onChange={(field, value) => setForm({ ...form, [field]: value })} titulo={form.titulo} conteudo={form.conteudo || form.resumo} contexto={`Post de blog técnico sobre ${form.categoria || "impressoras térmicas"}`} />
             <div className="flex items-center gap-2">
               <input type="checkbox" checked={form.publicado} onChange={(e) => setForm({ ...form, publicado: e.target.checked })} id="publicado" />
               <Label htmlFor="publicado">Publicado</Label>

@@ -83,7 +83,7 @@ export default function AdminTutorials() {
               <Label>Conteúdo</Label>
               <RichTextEditor value={form.conteudo} onChange={(html) => setForm({ ...form, conteudo: html })} folder="tutorials" />
             </div>
-            <SEOFields metaTitle={form.meta_title} metaDescription={form.meta_description} metaKeywords={form.meta_keywords} onChange={(field, value) => setForm({ ...form, [field]: value })} />
+            <SEOFields metaTitle={form.meta_title} metaDescription={form.meta_description} metaKeywords={form.meta_keywords} onChange={(field, value) => setForm({ ...form, [field]: value })} titulo={form.titulo} conteudo={form.conteudo} contexto={`Tutorial sobre ${form.categoria || "impressoras térmicas"}`} />
           </div>
           <div className="flex gap-3 mt-4">
             <Button onClick={() => saveMutation.mutate()} disabled={!form.titulo.trim() || !form.slug.trim() || !form.conteudo.trim() || saveMutation.isPending}>{saveMutation.isPending ? "Salvando..." : "Salvar"}</Button>

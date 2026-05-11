@@ -106,6 +106,8 @@ export default function AdminMaterials() {
             <SEOFields
               metaTitle={form.meta_title} metaDescription={form.meta_description} metaKeywords={form.meta_keywords}
               onChange={(field, value) => setForm({ ...form, [field]: value })}
+              titulo={form.nome} conteudo={form.conteudo || form.descricao}
+              contexto={`Material/insumo: ${form.categoria || "etiquetas/ribbons"}`}
             />
           </div>
           <div className="flex gap-3 mt-4">
