@@ -229,6 +229,45 @@ export type Database = {
         }
         Relationships: []
       }
+      site_settings: {
+        Row: {
+          ga_id: string | null
+          id: string
+          meta_description: string | null
+          meta_keywords: string | null
+          meta_title: string | null
+          og_image_url: string | null
+          robots_txt: string
+          singleton: boolean
+          site_url: string
+          updated_at: string
+        }
+        Insert: {
+          ga_id?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
+          robots_txt?: string
+          singleton?: boolean
+          site_url?: string
+          updated_at?: string
+        }
+        Update: {
+          ga_id?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_keywords?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
+          robots_txt?: string
+          singleton?: boolean
+          site_url?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       softwares: {
         Row: {
           conteudo: string | null

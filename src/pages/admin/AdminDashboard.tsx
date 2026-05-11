@@ -1,7 +1,7 @@
 import { useAuth } from "@/hooks/useAuth";
 import { Navigate, Link, Outlet, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Printer, Cpu, Package, BookOpen, Tag, FileText, LogOut, LayoutDashboard, Download } from "lucide-react";
+import { Printer, Cpu, Package, BookOpen, Tag, FileText, LogOut, LayoutDashboard, Download, Search } from "lucide-react";
 
 const adminLinks = [
   { label: "Dashboard", path: "/admin", icon: LayoutDashboard },
@@ -11,6 +11,7 @@ const adminLinks = [
   { label: "Tutoriais", path: "/admin/tutoriais", icon: BookOpen },
   { label: "Materiais", path: "/admin/materiais", icon: Tag },
   { label: "Blog", path: "/admin/blog", icon: FileText },
+  { label: "SEO", path: "/admin/seo", icon: Search },
 ];
 
 export default function AdminDashboard() {
