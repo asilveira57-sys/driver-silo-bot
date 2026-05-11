@@ -28,6 +28,7 @@ import AdminSoftwares from "./pages/admin/AdminSoftwares";
 import AdminTutorials from "./pages/admin/AdminTutorials";
 import AdminMaterials from "./pages/admin/AdminMaterials";
 import AdminBlog from "./pages/admin/AdminBlog";
+import AdminSEO from "./pages/admin/AdminSEO";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +64,7 @@ const App = () => (
               <Route path="tutoriais" element={<AdminTutorials />} />
               <Route path="materiais" element={<AdminMaterials />} />
               <Route path="blog" element={<AdminBlog />} />
+              <Route path="seo" element={<AdminSEO />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
