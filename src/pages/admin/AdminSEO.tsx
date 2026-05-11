@@ -8,8 +8,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Loader2, Save, Download, ExternalLink, RefreshCw, Sparkles } from "lucide-react";
 
-const SITEMAP_URL = `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co/functions/v1/sitemap`;
-const ROBOTS_URL = `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co/functions/v1/robots`;
+const SITE_BASE = "https://www.adeconex.com";
+const SITEMAP_URL = `${SITE_BASE}/sitemap.xml`;
+const ROBOTS_URL = `${SITE_BASE}/robots.txt`;
 
 type Settings = {
   id?: string;
