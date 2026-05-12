@@ -41,6 +41,16 @@ export function Footer() {
           </div>
 
           <div>
+            <h3 className="font-heading font-bold text-lg mb-4">Institucional</h3>
+            <ul className="space-y-2 text-sm text-primary-foreground/80">
+              <li><Link to="/quem-somos" className="hover:text-secondary transition-colors">Quem Somos</Link></li>
+              <li><Link to="/politica-de-privacidade" className="hover:text-secondary transition-colors">Política de Privacidade</Link></li>
+              <li><Link to="/politica-de-cookies" className="hover:text-secondary transition-colors">Política de Cookies</Link></li>
+              <li><Link to="/termos-e-condicoes" className="hover:text-secondary transition-colors">Termos e Condições</Link></li>
+            </ul>
+          </div>
+
+          <div>
             <h3 className="font-heading font-bold text-lg mb-4">Contato</h3>
             <ul className="space-y-3 text-sm text-primary-foreground/80">
               <li className="flex items-center gap-2">
