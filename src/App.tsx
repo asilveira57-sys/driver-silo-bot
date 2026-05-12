@@ -56,6 +56,7 @@ const App = () => (
             <Route path="/downloads" element={<DownloadsPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPostDetailPage />} />
+            <Route path="/quem-somos" element={<QuemSomosPage />} />
             <Route path="/admin/login" element={<AdminLoginPage />} />
             <Route path="/admin" element={<AdminDashboard />}>
               <Route index element={<AdminHome />} />
