@@ -1,13 +1,31 @@
 import { SEOHead } from "@/components/SEOHead";
 import { LegalLayout } from "@/components/legal/LegalLayout";
+import { breadcrumbJsonLd, organizationJsonLd, SITE_URL } from "@/lib/seo";
 
 export default function PrivacidadePage() {
   return (
     <>
       <SEOHead
         title="Política de Privacidade"
-        description="Saiba como a Adeconex coleta, utiliza e protege as informações dos usuários do portal Adeconex Drivers."
+        description="Saiba como a Adeconex coleta, utiliza e protege as informações dos usuários do portal Adeconex Drivers, em conformidade com a LGPD."
         canonical="https://www.adeconex.com/politica-de-privacidade"
+        keywords="política de privacidade, Adeconex, LGPD, proteção de dados, cookies, privacidade portal drivers"
+        jsonLd={[
+          organizationJsonLd,
+          {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: "Política de Privacidade - Adeconex",
+            url: `${SITE_URL}/politica-de-privacidade`,
+            inLanguage: "pt-BR",
+            isPartOf: { "@type": "WebSite", name: "Adeconex Drivers", url: SITE_URL },
+            about: { "@type": "Thing", name: "Privacidade e proteção de dados" },
+          },
+          breadcrumbJsonLd([
+            { name: "Início", url: `${SITE_URL}/` },
+            { name: "Política de Privacidade", url: `${SITE_URL}/politica-de-privacidade` },
+          ]),
+        ]}
       />
       <LegalLayout
         title="Política de Privacidade"

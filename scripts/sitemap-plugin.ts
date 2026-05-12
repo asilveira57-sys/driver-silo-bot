@@ -54,6 +54,12 @@ async function generate(): Promise<string> {
     { loc: "/tutoriais", priority: "0.8", changefreq: "weekly" },
     { loc: "/materiais", priority: "0.8", changefreq: "weekly" },
     { loc: "/downloads", priority: "0.7", changefreq: "weekly" },
+    { loc: "/quem-somos", priority: "0.6", changefreq: "monthly" },
+    { loc: "/contato", priority: "0.6", changefreq: "monthly" },
+    { loc: "/politica-de-privacidade", priority: "0.5", changefreq: "yearly" },
+    { loc: "/politica-de-cookies", priority: "0.5", changefreq: "yearly" },
+    { loc: "/termos-e-condicoes", priority: "0.5", changefreq: "yearly" },
+    { loc: "/lgpd", priority: "0.5", changefreq: "yearly" },
   ];
 
   const [posts, drivers, softwares, printers, tutorials, materials] = await Promise.all([

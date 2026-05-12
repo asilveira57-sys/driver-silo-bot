@@ -1,13 +1,31 @@
 import { SEOHead } from "@/components/SEOHead";
 import { LegalLayout } from "@/components/legal/LegalLayout";
+import { breadcrumbJsonLd, organizationJsonLd, SITE_URL } from "@/lib/seo";
 
 export default function LGPDPage() {
   return (
     <>
       <SEOHead
         title="LGPD - Lei Geral de Proteção de Dados"
-        description="Saiba como a Adeconex Drivers trata dados pessoais em conformidade com a LGPD (Lei nº 13.709/2018)."
+        description="Saiba como a Adeconex Drivers trata dados pessoais em conformidade com a LGPD (Lei nº 13.709/2018): direitos, finalidades e segurança."
         canonical="https://www.adeconex.com/lgpd"
+        keywords="LGPD, Lei Geral de Proteção de Dados, Adeconex, privacidade, direitos do titular, dados pessoais"
+        jsonLd={[
+          organizationJsonLd,
+          {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: "LGPD - Adeconex Drivers",
+            url: `${SITE_URL}/lgpd`,
+            inLanguage: "pt-BR",
+            isPartOf: { "@type": "WebSite", name: "Adeconex Drivers", url: SITE_URL },
+            about: { "@type": "Thing", name: "Lei Geral de Proteção de Dados (Lei 13.709/2018)" },
+          },
+          breadcrumbJsonLd([
+            { name: "Início", url: `${SITE_URL}/` },
+            { name: "LGPD", url: `${SITE_URL}/lgpd` },
+          ]),
+        ]}
       />
       <LegalLayout
         title="LGPD — Lei Geral de Proteção de Dados"
