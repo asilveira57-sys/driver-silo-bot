@@ -47,6 +47,7 @@ export function Footer() {
               <li><Link to="/politica-de-privacidade" className="hover:text-secondary transition-colors">Política de Privacidade</Link></li>
               <li><Link to="/politica-de-cookies" className="hover:text-secondary transition-colors">Política de Cookies</Link></li>
               <li><Link to="/termos-e-condicoes" className="hover:text-secondary transition-colors">Termos e Condições</Link></li>
+              <li><Link to="/lgpd" className="hover:text-secondary transition-colors">LGPD</Link></li>
             </ul>
           </div>
 
