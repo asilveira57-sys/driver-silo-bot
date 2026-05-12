@@ -111,7 +111,6 @@ export default function QuemSomosPage() {
         <div className="mt-12">
           <ConversionBanner />
         </div>
-      </article>
       </section>
     </Layout>
   );
