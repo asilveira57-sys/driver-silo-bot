@@ -19,6 +19,7 @@ import MaterialDetailPage from "./pages/MaterialDetailPage";
 import DownloadsPage from "./pages/DownloadsPage";
 import BlogPage from "./pages/BlogPage";
 import BlogPostDetailPage from "./pages/BlogPostDetailPage";
+import QuemSomosPage from "./pages/QuemSomosPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminHome from "./pages/admin/AdminHome";
