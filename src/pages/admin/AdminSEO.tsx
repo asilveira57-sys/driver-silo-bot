@@ -8,9 +8,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Loader2, Save, Download, ExternalLink, RefreshCw, Sparkles } from "lucide-react";
 
-const FN_BASE = `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co/functions/v1`;
-const SITEMAP_URL = `${FN_BASE}/sitemap`;
-const ROBOTS_URL = `${FN_BASE}/robots`;
+const SITE_BASE = "https://www.adeconex.com";
+const SITEMAP_URL = `${SITE_BASE}/sitemap.xml`;
+const ROBOTS_URL = `${SITE_BASE}/robots.txt`;
 
 type Settings = {
   id?: string;
