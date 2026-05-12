@@ -64,7 +64,7 @@ export default function ContatoPage() {
             </a>
 
             <a
-              href="https://wa.me/5527331865 65".replace(/\s/g, "")
+              href="https://wa.me/552733186565"
               target="_blank"
               rel="noopener"
               className="group flex items-start gap-4 rounded-xl border border-border bg-card p-5 shadow-sm transition-all hover:shadow-md hover:border-primary/40"
