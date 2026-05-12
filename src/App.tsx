@@ -24,6 +24,7 @@ import PrivacidadePage from "./pages/PrivacidadePage";
 import CookiesPage from "./pages/CookiesPage";
 import TermosPage from "./pages/TermosPage";
 import LGPDPage from "./pages/LGPDPage";
+import ContatoPage from "./pages/ContatoPage";
 import { CookieConsent } from "./components/CookieConsent";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -66,6 +67,7 @@ const App = () => (
             <Route path="/politica-de-cookies" element={<CookiesPage />} />
             <Route path="/termos-e-condicoes" element={<TermosPage />} />
             <Route path="/lgpd" element={<LGPDPage />} />
+            <Route path="/contato" element={<ContatoPage />} />
             <Route path="/admin/login" element={<AdminLoginPage />} />
             <Route path="/admin" element={<AdminDashboard />}>
               <Route index element={<AdminHome />} />

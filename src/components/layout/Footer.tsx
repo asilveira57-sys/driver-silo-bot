@@ -48,6 +48,7 @@ export function Footer() {
               <li><Link to="/politica-de-cookies" className="hover:text-secondary transition-colors">Política de Cookies</Link></li>
               <li><Link to="/termos-e-condicoes" className="hover:text-secondary transition-colors">Termos e Condições</Link></li>
               <li><Link to="/lgpd" className="hover:text-secondary transition-colors">LGPD</Link></li>
+              <li><Link to="/contato" className="hover:text-secondary transition-colors">Contato</Link></li>
             </ul>
           </div>
 
@@ -71,7 +72,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 pt-6 border-t border-primary-foreground/20 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-primary-foreground/60">
-          <p>© {new Date().getFullYear()} Adeconex. Todos os direitos reservados.</p>
+          <p>© {new Date().getFullYear()} Adeconex Etiquetas. Todos os direitos reservados.</p>
           <a
             href="https://www.adeconex.com.br"
             target="_blank"
