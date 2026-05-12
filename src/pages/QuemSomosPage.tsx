@@ -2,6 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEOHead } from "@/components/SEOHead";
 import { ConversionBanner } from "@/components/ConversionBanner";
 import { CheckCircle2, Mail, Phone, Globe, MessageCircle } from "lucide-react";
+import { breadcrumbJsonLd, organizationJsonLd, SITE_URL } from "@/lib/seo";
 
 export default function QuemSomosPage() {
   const valores = [
@@ -17,21 +18,25 @@ export default function QuemSomosPage() {
     <Layout>
       <SEOHead
         title="Quem Somos"
-        description="Conheça a Adeconex: portal técnico de drivers, softwares e materiais para impressão térmica, etiquetas, ribbons e automação comercial."
+        description="Conheça a Adeconex: portal técnico de drivers, softwares e materiais para impressão térmica, etiquetas, ribbons e automação comercial no Brasil."
         canonical="https://www.adeconex.com/quem-somos"
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "AboutPage",
-          name: "Quem Somos - Adeconex",
-          url: "https://www.adeconex.com/quem-somos",
-          about: {
-            "@type": "Organization",
-            name: "Adeconex",
-            url: "https://www.adeconex.com.br",
-            email: "vendas@adeconex.com.br",
-            telephone: "+55-27-3318-6565",
+        keywords="Adeconex, quem somos, impressão térmica, drivers, automação comercial, etiquetas, ribbons, suporte técnico"
+        jsonLd={[
+          organizationJsonLd,
+          {
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            name: "Quem Somos - Adeconex",
+            url: `${SITE_URL}/quem-somos`,
+            inLanguage: "pt-BR",
+            isPartOf: { "@type": "WebSite", name: "Adeconex Drivers", url: SITE_URL },
+            about: organizationJsonLd,
           },
-        }}
+          breadcrumbJsonLd([
+            { name: "Início", url: `${SITE_URL}/` },
+            { name: "Quem Somos", url: `${SITE_URL}/quem-somos` },
+          ]),
+        ]}
       />
 
       <section className="hero-gradient py-16 md:py-20">

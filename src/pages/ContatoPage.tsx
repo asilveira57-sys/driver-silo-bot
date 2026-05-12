@@ -2,27 +2,32 @@ import { Layout } from "@/components/layout/Layout";
 import { SEOHead } from "@/components/SEOHead";
 import { Mail, Phone, MapPin, Globe, MessageCircle, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { breadcrumbJsonLd, organizationJsonLd, SITE_URL } from "@/lib/seo";
 
 export default function ContatoPage() {
   return (
     <Layout>
       <SEOHead
         title="Contato"
-        description="Fale com a Adeconex: canais oficiais de atendimento, suporte ao portal Adeconex Drivers, e-mail comercial e WhatsApp."
+        description="Fale com a Adeconex: canais oficiais de atendimento, suporte ao portal Adeconex Drivers, e-mail comercial e WhatsApp para impressão térmica e automação."
         canonical="https://www.adeconex.com/contato"
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "ContactPage",
-          name: "Contato - Adeconex",
-          url: "https://www.adeconex.com/contato",
-          mainEntity: {
-            "@type": "Organization",
-            name: "Adeconex",
-            email: "vendas@adeconex.com.br",
-            telephone: "+55-27-3318-6565",
-            url: "https://www.adeconex.com.br",
+        keywords="contato Adeconex, suporte técnico, impressão térmica, atendimento, WhatsApp Adeconex, vendas etiquetas"
+        jsonLd={[
+          organizationJsonLd,
+          {
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: "Contato - Adeconex",
+            url: `${SITE_URL}/contato`,
+            inLanguage: "pt-BR",
+            isPartOf: { "@type": "WebSite", name: "Adeconex Drivers", url: SITE_URL },
+            mainEntity: organizationJsonLd,
           },
-        }}
+          breadcrumbJsonLd([
+            { name: "Início", url: `${SITE_URL}/` },
+            { name: "Contato", url: `${SITE_URL}/contato` },
+          ]),
+        ]}
       />
 
       <section className="relative bg-gradient-to-b from-accent/40 via-background to-background border-b border-border">
