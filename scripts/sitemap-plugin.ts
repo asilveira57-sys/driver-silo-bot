@@ -18,7 +18,7 @@ async function fetchTable(table: string, select: string, filter = ""): Promise<a
       headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` },
     });
     if (!res.ok) return [];
-    return await res.json();
+    return (await res.json()) as any[];
   } catch {
     return [];
   }
