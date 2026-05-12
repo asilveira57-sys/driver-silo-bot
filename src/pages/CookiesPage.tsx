@@ -1,5 +1,6 @@
 import { SEOHead } from "@/components/SEOHead";
 import { LegalLayout } from "@/components/legal/LegalLayout";
+import { breadcrumbJsonLd, organizationJsonLd, SITE_URL } from "@/lib/seo";
 
 export default function CookiesPage() {
   return (
@@ -8,6 +9,22 @@ export default function CookiesPage() {
         title="Política de Cookies"
         description="Entenda como a Adeconex utiliza cookies e tecnologias semelhantes durante a navegação no portal Adeconex Drivers."
         canonical="https://www.adeconex.com/politica-de-cookies"
+        keywords="política de cookies, Adeconex, cookies, AdSense, Google Analytics, navegação, preferências"
+        jsonLd={[
+          organizationJsonLd,
+          {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: "Política de Cookies - Adeconex",
+            url: `${SITE_URL}/politica-de-cookies`,
+            inLanguage: "pt-BR",
+            isPartOf: { "@type": "WebSite", name: "Adeconex Drivers", url: SITE_URL },
+          },
+          breadcrumbJsonLd([
+            { name: "Início", url: `${SITE_URL}/` },
+            { name: "Política de Cookies", url: `${SITE_URL}/politica-de-cookies` },
+          ]),
+        ]}
       />
       <LegalLayout
         title="Política de Cookies"

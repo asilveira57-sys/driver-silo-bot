@@ -1,14 +1,31 @@
 import { SEOHead } from "@/components/SEOHead";
 import { LegalLayout } from "@/components/legal/LegalLayout";
 import { Link } from "react-router-dom";
+import { breadcrumbJsonLd, organizationJsonLd, SITE_URL } from "@/lib/seo";
 
 export default function TermosPage() {
   return (
     <>
       <SEOHead
         title="Termos e Condições de Uso"
-        description="Termos e condições de uso do portal Adeconex Drivers: regras, responsabilidades e limitações para utilização do conteúdo."
+        description="Termos e condições de uso do portal Adeconex Drivers: regras, responsabilidades e limitações para utilização do conteúdo, drivers e softwares."
         canonical="https://www.adeconex.com/termos-e-condicoes"
+        keywords="termos de uso, condições, Adeconex Drivers, responsabilidade, downloads, propriedade intelectual"
+        jsonLd={[
+          organizationJsonLd,
+          {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: "Termos e Condições de Uso - Adeconex",
+            url: `${SITE_URL}/termos-e-condicoes`,
+            inLanguage: "pt-BR",
+            isPartOf: { "@type": "WebSite", name: "Adeconex Drivers", url: SITE_URL },
+          },
+          breadcrumbJsonLd([
+            { name: "Início", url: `${SITE_URL}/` },
+            { name: "Termos e Condições", url: `${SITE_URL}/termos-e-condicoes` },
+          ]),
+        ]}
       />
       <LegalLayout
         title="Termos e Condições de Uso"
