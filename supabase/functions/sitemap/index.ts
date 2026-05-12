@@ -35,6 +35,12 @@ Deno.serve(async (req) => {
     { loc: "/tutoriais", priority: "0.8", changefreq: "weekly" },
     { loc: "/materiais", priority: "0.8", changefreq: "weekly" },
     { loc: "/downloads", priority: "0.7", changefreq: "weekly" },
+    { loc: "/quem-somos", priority: "0.6", changefreq: "monthly" },
+    { loc: "/contato", priority: "0.6", changefreq: "monthly" },
+    { loc: "/politica-de-privacidade", priority: "0.5", changefreq: "yearly" },
+    { loc: "/politica-de-cookies", priority: "0.5", changefreq: "yearly" },
+    { loc: "/termos-e-condicoes", priority: "0.5", changefreq: "yearly" },
+    { loc: "/lgpd", priority: "0.5", changefreq: "yearly" },
   ];
 
   for (const post of blogRes.data || []) {

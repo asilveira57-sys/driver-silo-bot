@@ -6,10 +6,24 @@ interface SEOHeadProps {
   canonical?: string;
   keywords?: string;
   ogImage?: string;
-  jsonLd?: Record<string, unknown>;
+  ogType?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-export function SEOHead({ title, description, canonical, keywords, ogImage, jsonLd }: SEOHeadProps) {
+const SITE_NAME = "Adeconex Drivers";
+const DEFAULT_OG_IMAGE = "https://www.adeconex.com/og-default.jpg";
+
+export function SEOHead({
+  title,
+  description,
+  canonical,
+  keywords,
+  ogImage,
+  ogType = "website",
+  noindex = false,
+  jsonLd,
+}: SEOHeadProps) {
   useEffect(() => {
     document.title = `${title} | Adeconex`;
 
@@ -24,15 +38,27 @@ export function SEOHead({ title, description, canonical, keywords, ogImage, json
       el.setAttribute("content", content);
     };
 
+    const image = ogImage || DEFAULT_OG_IMAGE;
+
     setMeta("description", description);
     setMeta("keywords", keywords || "");
+    setMeta("robots", noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1");
+    setMeta("googlebot", noindex ? "noindex, nofollow" : "index, follow");
+
+    // Open Graph
     setMeta("og:title", title, "property");
     setMeta("og:description", description, "property");
-    setMeta("og:type", "website", "property");
-    if (ogImage) setMeta("og:image", ogImage, "property");
+    setMeta("og:type", ogType, "property");
+    setMeta("og:site_name", SITE_NAME, "property");
+    setMeta("og:locale", "pt_BR", "property");
+    if (canonical) setMeta("og:url", canonical, "property");
+    setMeta("og:image", image, "property");
+
+    // Twitter
     setMeta("twitter:card", "summary_large_image", "name");
     setMeta("twitter:title", title, "name");
     setMeta("twitter:description", description, "name");
+    setMeta("twitter:image", image, "name");
 
     // Canonical
     let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
@@ -41,22 +67,23 @@ export function SEOHead({ title, description, canonical, keywords, ogImage, json
       link.href = canonical;
     } else if (link) { link.remove(); }
 
-    // JSON-LD
-    const existingScript = document.querySelector('script[data-seo="jsonld"]');
-    if (existingScript) existingScript.remove();
+    // JSON-LD (supports array)
+    document.querySelectorAll('script[data-seo="jsonld"]').forEach((s) => s.remove());
     if (jsonLd) {
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute("data-seo", "jsonld");
-      script.textContent = JSON.stringify(jsonLd);
-      document.head.appendChild(script);
+      const arr = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
+      arr.forEach((obj) => {
+        const script = document.createElement("script");
+        script.type = "application/ld+json";
+        script.setAttribute("data-seo", "jsonld");
+        script.textContent = JSON.stringify(obj);
+        document.head.appendChild(script);
+      });
     }
 
     return () => {
-      const s = document.querySelector('script[data-seo="jsonld"]');
-      if (s) s.remove();
+      document.querySelectorAll('script[data-seo="jsonld"]').forEach((s) => s.remove());
     };
-  }, [title, description, canonical, keywords, ogImage, jsonLd]);
+  }, [title, description, canonical, keywords, ogImage, ogType, noindex, jsonLd]);
 
   return null;
 }
