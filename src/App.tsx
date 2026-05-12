@@ -23,6 +23,8 @@ import QuemSomosPage from "./pages/QuemSomosPage";
 import PrivacidadePage from "./pages/PrivacidadePage";
 import CookiesPage from "./pages/CookiesPage";
 import TermosPage from "./pages/TermosPage";
+import LGPDPage from "./pages/LGPDPage";
+import { CookieConsent } from "./components/CookieConsent";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminHome from "./pages/admin/AdminHome";
@@ -63,6 +65,7 @@ const App = () => (
             <Route path="/politica-de-privacidade" element={<PrivacidadePage />} />
             <Route path="/politica-de-cookies" element={<CookiesPage />} />
             <Route path="/termos-e-condicoes" element={<TermosPage />} />
+            <Route path="/lgpd" element={<LGPDPage />} />
             <Route path="/admin/login" element={<AdminLoginPage />} />
             <Route path="/admin" element={<AdminDashboard />}>
               <Route index element={<AdminHome />} />
@@ -76,6 +79,7 @@ const App = () => (
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <CookieConsent />
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
