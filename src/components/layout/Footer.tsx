@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="hero-gradient text-primary-foreground">
       <div className="section-container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Printer className="h-6 w-6" />
@@ -37,6 +37,16 @@ export function Footer() {
               <li><a href="https://www.adeconex.com.br" target="_blank" rel="noopener" className="hover:text-secondary transition-colors">Ribbons</a></li>
               <li><a href="https://www.adeconex.com.br" target="_blank" rel="noopener" className="hover:text-secondary transition-colors">Fita de Cetim</a></li>
               <li><a href="https://www.adeconex.com.br" target="_blank" rel="noopener" className="hover:text-secondary transition-colors">Impressoras</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-heading font-bold text-lg mb-4">Institucional</h3>
+            <ul className="space-y-2 text-sm text-primary-foreground/80">
+              <li><Link to="/quem-somos" className="hover:text-secondary transition-colors">Quem Somos</Link></li>
+              <li><Link to="/politica-de-privacidade" className="hover:text-secondary transition-colors">Política de Privacidade</Link></li>
+              <li><Link to="/politica-de-cookies" className="hover:text-secondary transition-colors">Política de Cookies</Link></li>
+              <li><Link to="/termos-e-condicoes" className="hover:text-secondary transition-colors">Termos e Condições</Link></li>
             </ul>
           </div>
 
