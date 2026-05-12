@@ -87,6 +87,11 @@ export default function Index() {
               Central de Downloads
             </Link>
           </div>
+          <div className="mt-6">
+            <Link to="/quem-somos" className="text-sm text-primary-foreground/80 hover:text-secondary underline-offset-4 hover:underline">
+              Conheça a Adeconex →
+            </Link>
+          </div>
         </div>
       </section>
 
