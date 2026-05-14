@@ -75,6 +75,16 @@ export default function AdminSoftwares() {
             <div className="sm:col-span-2"><Label>Link Download</Label><Input value={form.link_download} onChange={(e) => setForm({ ...form, link_download: e.target.value })} /></div>
             <div className="sm:col-span-2"><Label>Descrição Breve</Label><Input value={form.descricao} onChange={(e) => setForm({ ...form, descricao: e.target.value })} placeholder="Breve descrição para listagens" /></div>
             <div className="sm:col-span-2">
+              <ImageUpload
+                value={form.imagem_url ? [form.imagem_url] : []}
+                onChange={(urls) => setForm({ ...form, imagem_url: urls[0] || "" })}
+                max={1}
+                folder="softwares"
+                label="Imagem do Software"
+                hint="Logo ou ícone exibido no card e na página de detalhes."
+              />
+            </div>
+            <div className="sm:col-span-2">
               <Label>Conteúdo Completo</Label>
               <RichTextEditor value={form.conteudo} onChange={(html) => setForm({ ...form, conteudo: html })} folder="softwares" />
             </div>
