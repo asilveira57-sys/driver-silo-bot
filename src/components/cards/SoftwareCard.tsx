@@ -13,6 +13,18 @@ export function SoftwareCard({ software }: SoftwareCardProps) {
 
   return (
     <div className="silo-card flex flex-col gap-3">
+      {software.imagem_url ? (
+        <img
+          src={software.imagem_url}
+          alt={software.nome}
+          className="w-full h-40 object-contain rounded-md bg-muted"
+          loading="lazy"
+        />
+      ) : (
+        <div className="w-full h-40 flex items-center justify-center rounded-md bg-muted">
+          <Package className="h-12 w-12 text-muted-foreground/40" />
+        </div>
+      )}
       <div className="flex items-center gap-3">
         <div className="p-2 rounded-md bg-secondary/20">
           <Package className="h-5 w-5 text-secondary-foreground" />
