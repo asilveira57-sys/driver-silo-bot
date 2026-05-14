@@ -11,6 +11,18 @@ interface DriverCardProps {
 export function DriverCard({ driver }: DriverCardProps) {
   return (
     <div className="silo-card flex flex-col gap-3">
+      {driver.imagem_url ? (
+        <img
+          src={driver.imagem_url}
+          alt={`${driver.marca} ${driver.modelo}`}
+          className="w-full h-40 object-contain rounded-md bg-muted"
+          loading="lazy"
+        />
+      ) : (
+        <div className="w-full h-40 flex items-center justify-center rounded-md bg-muted">
+          <Monitor className="h-12 w-12 text-muted-foreground/40" />
+        </div>
+      )}
       <div className="flex items-start justify-between">
         <div>
           <h3 className="font-heading font-bold text-foreground">
