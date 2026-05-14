@@ -98,6 +98,7 @@ export type Database = {
           created_at: string
           data_publicacao: string
           id: string
+          imagem_url: string | null
           link_download: string
           marca: string
           meta_description: string | null
@@ -114,6 +115,7 @@ export type Database = {
           created_at?: string
           data_publicacao?: string
           id?: string
+          imagem_url?: string | null
           link_download: string
           marca: string
           meta_description?: string | null
@@ -130,6 +132,7 @@ export type Database = {
           created_at?: string
           data_publicacao?: string
           id?: string
+          imagem_url?: string | null
           link_download?: string
           marca?: string
           meta_description?: string | null
@@ -274,6 +277,7 @@ export type Database = {
           created_at: string
           descricao: string | null
           id: string
+          imagem_url: string | null
           link_download: string
           meta_description: string | null
           meta_keywords: string | null
@@ -286,6 +290,7 @@ export type Database = {
           created_at?: string
           descricao?: string | null
           id?: string
+          imagem_url?: string | null
           link_download: string
           meta_description?: string | null
           meta_keywords?: string | null
@@ -298,6 +303,7 @@ export type Database = {
           created_at?: string
           descricao?: string | null
           id?: string
+          imagem_url?: string | null
           link_download?: string
           meta_description?: string | null
           meta_keywords?: string | null
