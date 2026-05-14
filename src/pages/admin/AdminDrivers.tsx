@@ -54,7 +54,7 @@ export default function AdminDrivers() {
   const resetForm = () => { setForm(emptyForm); setEditing(null); setCreating(false); };
   const startEdit = (d: any) => {
     setEditing(d); setCreating(true);
-    setForm({ marca: d.marca, modelo: d.modelo, nome: d.nome, versao: d.versao, sistema_operacional: d.sistema_operacional, link_download: d.link_download, ativo: d.ativo, conteudo: d.conteudo || "", meta_title: d.meta_title || "", meta_description: d.meta_description || "", meta_keywords: d.meta_keywords || "" });
+    setForm({ marca: d.marca, modelo: d.modelo, nome: d.nome, versao: d.versao, sistema_operacional: d.sistema_operacional, link_download: d.link_download, ativo: d.ativo, conteudo: d.conteudo || "", imagem_url: d.imagem_url || "", meta_title: d.meta_title || "", meta_description: d.meta_description || "", meta_keywords: d.meta_keywords || "" });
   };
 
   return (
