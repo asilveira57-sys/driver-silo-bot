@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { SEOFields } from "@/components/admin/SEOFields";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
 
-const emptyForm = { marca: "", modelo: "", nome: "", versao: "", sistema_operacional: "", link_download: "", ativo: true, conteudo: "", meta_title: "", meta_description: "", meta_keywords: "" };
+const emptyForm = { marca: "", modelo: "", nome: "", versao: "", sistema_operacional: "", link_download: "", ativo: true, conteudo: "", imagem_url: "", meta_title: "", meta_description: "", meta_keywords: "" };
 
 export default function AdminDrivers() {
   const qc = useQueryClient();
@@ -31,6 +32,7 @@ export default function AdminDrivers() {
         marca: form.marca.trim(), modelo: form.modelo.trim(), nome: form.nome.trim(), versao: form.versao.trim(),
         sistema_operacional: form.sistema_operacional.trim(), link_download: form.link_download.trim(), ativo: form.ativo,
         conteudo: form.conteudo || null,
+        imagem_url: form.imagem_url.trim() || null,
         meta_title: form.meta_title.trim() || null, meta_description: form.meta_description.trim() || null, meta_keywords: form.meta_keywords.trim() || null,
       };
       if (editing) {
@@ -53,7 +55,7 @@ export default function AdminDrivers() {
   const resetForm = () => { setForm(emptyForm); setEditing(null); setCreating(false); };
   const startEdit = (d: any) => {
     setEditing(d); setCreating(true);
-    setForm({ marca: d.marca, modelo: d.modelo, nome: d.nome, versao: d.versao, sistema_operacional: d.sistema_operacional, link_download: d.link_download, ativo: d.ativo, conteudo: d.conteudo || "", meta_title: d.meta_title || "", meta_description: d.meta_description || "", meta_keywords: d.meta_keywords || "" });
+    setForm({ marca: d.marca, modelo: d.modelo, nome: d.nome, versao: d.versao, sistema_operacional: d.sistema_operacional, link_download: d.link_download, ativo: d.ativo, conteudo: d.conteudo || "", imagem_url: d.imagem_url || "", meta_title: d.meta_title || "", meta_description: d.meta_description || "", meta_keywords: d.meta_keywords || "" });
   };
 
   return (
@@ -78,6 +80,16 @@ export default function AdminDrivers() {
             <div className="flex items-center gap-2 sm:col-span-2">
               <input type="checkbox" checked={form.ativo} onChange={(e) => setForm({ ...form, ativo: e.target.checked })} id="ativo" />
               <Label htmlFor="ativo">Ativo</Label>
+            </div>
+            <div className="sm:col-span-2">
+              <ImageUpload
+                value={form.imagem_url ? [form.imagem_url] : []}
+                onChange={(urls) => setForm({ ...form, imagem_url: urls[0] || "" })}
+                max={1}
+                folder="drivers"
+                label="Imagem do Driver"
+                hint="Imagem ilustrativa exibida no card e na página de detalhes."
+              />
             </div>
             <div className="sm:col-span-2">
               <Label>Conteúdo / Instruções</Label>

@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { SEOFields } from "@/components/admin/SEOFields";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
 
-const emptyForm = { nome: "", descricao: "", versao: "", link_download: "", conteudo: "", meta_title: "", meta_description: "", meta_keywords: "" };
+const emptyForm = { nome: "", descricao: "", versao: "", link_download: "", conteudo: "", imagem_url: "", meta_title: "", meta_description: "", meta_keywords: "" };
 
 export default function AdminSoftwares() {
   const qc = useQueryClient();
@@ -30,6 +31,7 @@ export default function AdminSoftwares() {
       const payload: any = {
         nome: form.nome.trim(), descricao: form.descricao.trim() || null, versao: form.versao.trim(), link_download: form.link_download.trim(),
         conteudo: form.conteudo || null,
+        imagem_url: form.imagem_url.trim() || null,
         meta_title: form.meta_title.trim() || null, meta_description: form.meta_description.trim() || null, meta_keywords: form.meta_keywords.trim() || null,
       };
       if (editing) {
@@ -52,7 +54,7 @@ export default function AdminSoftwares() {
   const resetForm = () => { setForm(emptyForm); setEditing(null); setCreating(false); };
   const startEdit = (s: any) => {
     setEditing(s); setCreating(true);
-    setForm({ nome: s.nome, descricao: s.descricao || "", versao: s.versao, link_download: s.link_download, conteudo: s.conteudo || "", meta_title: s.meta_title || "", meta_description: s.meta_description || "", meta_keywords: s.meta_keywords || "" });
+    setForm({ nome: s.nome, descricao: s.descricao || "", versao: s.versao, link_download: s.link_download, conteudo: s.conteudo || "", imagem_url: s.imagem_url || "", meta_title: s.meta_title || "", meta_description: s.meta_description || "", meta_keywords: s.meta_keywords || "" });
   };
 
   return (
@@ -72,6 +74,16 @@ export default function AdminSoftwares() {
             <div><Label>Versão</Label><Input value={form.versao} onChange={(e) => setForm({ ...form, versao: e.target.value })} /></div>
             <div className="sm:col-span-2"><Label>Link Download</Label><Input value={form.link_download} onChange={(e) => setForm({ ...form, link_download: e.target.value })} /></div>
             <div className="sm:col-span-2"><Label>Descrição Breve</Label><Input value={form.descricao} onChange={(e) => setForm({ ...form, descricao: e.target.value })} placeholder="Breve descrição para listagens" /></div>
+            <div className="sm:col-span-2">
+              <ImageUpload
+                value={form.imagem_url ? [form.imagem_url] : []}
+                onChange={(urls) => setForm({ ...form, imagem_url: urls[0] || "" })}
+                max={1}
+                folder="softwares"
+                label="Imagem do Software"
+                hint="Logo ou ícone exibido no card e na página de detalhes."
+              />
+            </div>
             <div className="sm:col-span-2">
               <Label>Conteúdo Completo</Label>
               <RichTextEditor value={form.conteudo} onChange={(html) => setForm({ ...form, conteudo: html })} folder="softwares" />
