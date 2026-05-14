@@ -54,7 +54,7 @@ export default function AdminSoftwares() {
   const resetForm = () => { setForm(emptyForm); setEditing(null); setCreating(false); };
   const startEdit = (s: any) => {
     setEditing(s); setCreating(true);
-    setForm({ nome: s.nome, descricao: s.descricao || "", versao: s.versao, link_download: s.link_download, conteudo: s.conteudo || "", meta_title: s.meta_title || "", meta_description: s.meta_description || "", meta_keywords: s.meta_keywords || "" });
+    setForm({ nome: s.nome, descricao: s.descricao || "", versao: s.versao, link_download: s.link_download, conteudo: s.conteudo || "", imagem_url: s.imagem_url || "", meta_title: s.meta_title || "", meta_description: s.meta_description || "", meta_keywords: s.meta_keywords || "" });
   };
 
   return (
