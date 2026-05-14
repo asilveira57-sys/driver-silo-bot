@@ -81,6 +81,16 @@ export default function AdminDrivers() {
               <Label htmlFor="ativo">Ativo</Label>
             </div>
             <div className="sm:col-span-2">
+              <ImageUpload
+                value={form.imagem_url ? [form.imagem_url] : []}
+                onChange={(urls) => setForm({ ...form, imagem_url: urls[0] || "" })}
+                max={1}
+                folder="drivers"
+                label="Imagem do Driver"
+                hint="Imagem ilustrativa exibida no card e na página de detalhes."
+              />
+            </div>
+            <div className="sm:col-span-2">
               <Label>Conteúdo / Instruções</Label>
               <RichTextEditor value={form.conteudo} onChange={(html) => setForm({ ...form, conteudo: html })} folder="drivers" />
             </div>
