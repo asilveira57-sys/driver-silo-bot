@@ -9,7 +9,7 @@ import { SEOFields } from "@/components/admin/SEOFields";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, X } from "lucide-react";
 
-const emptyForm = { marca: "", modelo: "", nome: "", versao: "", sistema_operacional: "", link_download: "", ativo: true, conteudo: "", meta_title: "", meta_description: "", meta_keywords: "" };
+const emptyForm = { marca: "", modelo: "", nome: "", versao: "", sistema_operacional: "", link_download: "", ativo: true, conteudo: "", imagem_url: "", meta_title: "", meta_description: "", meta_keywords: "" };
 
 export default function AdminDrivers() {
   const qc = useQueryClient();
