@@ -31,6 +31,7 @@ export default function AdminSoftwares() {
       const payload: any = {
         nome: form.nome.trim(), descricao: form.descricao.trim() || null, versao: form.versao.trim(), link_download: form.link_download.trim(),
         conteudo: form.conteudo || null,
+        imagem_url: form.imagem_url.trim() || null,
         meta_title: form.meta_title.trim() || null, meta_description: form.meta_description.trim() || null, meta_keywords: form.meta_keywords.trim() || null,
       };
       if (editing) {
