@@ -196,7 +196,7 @@ export default function AdminSEO() {
 
         <TabsContent value="sitemap" className="space-y-3 bg-background border border-border rounded-lg p-4 mt-4">
           <div className="flex items-center justify-between">
-            <p className="text-sm text-muted-foreground">Gerado automaticamente a partir do banco.</p>
+            <p className="text-sm text-muted-foreground">Gerado em tempo real a partir do banco. O sitemap público é regerado a cada publicação.</p>
             <div className="flex gap-2">
               <Button size="sm" variant="outline" onClick={fetchSitemap} disabled={sitemapLoading}>
                 {sitemapLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
@@ -206,7 +206,7 @@ export default function AdminSEO() {
                 <Download className="h-4 w-4" /><span className="ml-1.5">Baixar</span>
               </Button>
               <Button asChild size="sm" variant="outline">
-                <a href={SITEMAP_URL} target="_blank" rel="noreferrer"><ExternalLink className="h-4 w-4" />Abrir</a>
+                <a href={SITEMAP_PUBLIC_URL} target="_blank" rel="noreferrer"><ExternalLink className="h-4 w-4" />Abrir público</a>
               </Button>
             </div>
           </div>
