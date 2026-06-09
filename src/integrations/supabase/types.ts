@@ -385,6 +385,87 @@ export type Database = {
         }
         Relationships: []
       }
+      tool_usage_logs: {
+        Row: {
+          action: string
+          created_at: string
+          device_type: string | null
+          error_message: string | null
+          id: string
+          metadata: Json | null
+          tool_slug: string
+          user_agent: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          device_type?: string | null
+          error_message?: string | null
+          id?: string
+          metadata?: Json | null
+          tool_slug: string
+          user_agent?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          device_type?: string | null
+          error_message?: string | null
+          id?: string
+          metadata?: Json | null
+          tool_slug?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      tools: {
+        Row: {
+          ativo: boolean
+          categoria: string
+          created_at: string
+          descricao: string
+          icone: string | null
+          id: string
+          keywords: string | null
+          meta_description: string | null
+          meta_title: string | null
+          nome: string
+          ordem: number
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          categoria?: string
+          created_at?: string
+          descricao: string
+          icone?: string | null
+          id?: string
+          keywords?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          nome: string
+          ordem?: number
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          categoria?: string
+          created_at?: string
+          descricao?: string
+          icone?: string | null
+          id?: string
+          keywords?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          nome?: string
+          ordem?: number
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       tutorials: {
         Row: {
           categoria: string
