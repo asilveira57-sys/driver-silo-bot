@@ -7,6 +7,10 @@ import { ConversionBanner } from "@/components/ConversionBanner";
 import { RelatedSidebar } from "@/components/RelatedSidebar";
 import { ChevronRight, BookOpen, Calendar } from "lucide-react";
 import { sanitizeContent } from "@/lib/htmlUtils";
+import { AdSlot } from "@/components/ads/AdSlot";
+import { ArticleWithMidAd } from "@/components/ads/ArticleWithMidAd";
+import { MultiplexAd } from "@/components/ads/MultiplexAd";
+import { StickySidebarAd } from "@/components/ads/StickySidebarAd";
 
 export default function TutorialDetailPage() {
   const { slug } = useParams();
@@ -74,11 +78,13 @@ export default function TutorialDetailPage() {
           <div className="lg:col-span-2">
             {tutorial ? (
               <article className="silo-card">
+                <AdSlot position="top" pageType="tutorial" minHeight={100} />
                 {isHtml ? (
-                  <div className="prose prose-slate max-w-none text-foreground [&_h1]:font-heading [&_h2]:font-heading [&_h3]:font-heading [&_a]:text-primary" dangerouslySetInnerHTML={{ __html: sanitized }} />
+                  <ArticleWithMidAd html={sanitized} pageType="tutorial" />
                 ) : (
                   <div className="whitespace-pre-wrap text-foreground leading-relaxed">{tutorial.conteudo}</div>
                 )}
+                <AdSlot position="bottom" pageType="tutorial" minHeight={250} />
               </article>
             ) : (
               <div className="text-center py-20">
@@ -86,9 +92,11 @@ export default function TutorialDetailPage() {
                 <p className="text-muted-foreground">Tutorial não encontrado.</p>
               </div>
             )}
+            {tutorial && <MultiplexAd pageType="tutorial" />}
             <div className="mt-8"><ConversionBanner /></div>
           </div>
           <div className="space-y-6">
+            <StickySidebarAd pageType="tutorial" />
             {related && related.length > 0 && (
               <RelatedSidebar title="Tutoriais Relacionados" links={related.map((r) => ({ label: r.titulo, href: `/tutoriais/${r.slug}`, type: "tutorial" as const }))} />
             )}

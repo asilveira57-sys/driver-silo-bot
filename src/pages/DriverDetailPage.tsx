@@ -7,6 +7,10 @@ import { ConversionBanner } from "@/components/ConversionBanner";
 import { RelatedSidebar } from "@/components/RelatedSidebar";
 import { Download, Monitor, Calendar, ChevronRight, AlertTriangle } from "lucide-react";
 import { sanitizeContent } from "@/lib/htmlUtils";
+import { AdSlot } from "@/components/ads/AdSlot";
+import { ArticleWithMidAd } from "@/components/ads/ArticleWithMidAd";
+import { MultiplexAd } from "@/components/ads/MultiplexAd";
+import { StickySidebarAd } from "@/components/ads/StickySidebarAd";
 
 export default function DriverDetailPage() {
   const { modelo } = useParams();
@@ -87,9 +91,11 @@ export default function DriverDetailPage() {
               </div>
             )}
 
+            <AdSlot position="top" pageType="driver" minHeight={100} />
+
             {richContent && (
               <div className="silo-card">
-                <div className="prose prose-slate max-w-none text-foreground [&_h1]:font-heading [&_h2]:font-heading [&_h3]:font-heading [&_a]:text-primary" dangerouslySetInnerHTML={{ __html: richContent }} />
+                <ArticleWithMidAd html={richContent} pageType="driver" />
               </div>
             )}
 
@@ -128,10 +134,13 @@ export default function DriverDetailPage() {
               </>
             )}
 
+            <AdSlot position="bottom" pageType="driver" minHeight={250} />
             <ConversionBanner title="Produtos recomendados para esta impressora" description="Etiquetas, ribbons e acessórios compatíveis na loja Adeconex." buttonText="Ver Produtos Compatíveis" />
+            <MultiplexAd pageType="driver" />
           </div>
 
           <div className="space-y-6">
+            <StickySidebarAd pageType="driver" />
             {relatedDrivers && relatedDrivers.length > 0 && (
               <RelatedSidebar title="Outros Modelos" links={relatedDrivers.map((d) => ({ label: `${d.marca} ${d.modelo}`, href: `/drivers/${d.modelo.toLowerCase().replace(/\s+/g, "-")}`, type: "driver" as const }))} />
             )}

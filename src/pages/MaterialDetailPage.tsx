@@ -7,6 +7,10 @@ import { ConversionBanner } from "@/components/ConversionBanner";
 import { RelatedSidebar } from "@/components/RelatedSidebar";
 import { Package, ChevronRight } from "lucide-react";
 import { sanitizeContent } from "@/lib/htmlUtils";
+import { AdSlot } from "@/components/ads/AdSlot";
+import { ArticleWithMidAd } from "@/components/ads/ArticleWithMidAd";
+import { MultiplexAd } from "@/components/ads/MultiplexAd";
+import { StickySidebarAd } from "@/components/ads/StickySidebarAd";
 
 export default function MaterialDetailPage() {
   const { slug } = useParams();
@@ -89,23 +93,27 @@ export default function MaterialDetailPage() {
               </div>
             </div>
 
+            <AdSlot position="top" pageType="material" minHeight={100} />
+
             {richContent && (
               <div className="silo-card">
-                <div
-                  className="prose prose-slate max-w-none text-foreground [&_h1]:font-heading [&_h2]:font-heading [&_h3]:font-heading [&_a]:text-primary"
-                  dangerouslySetInnerHTML={{ __html: richContent }}
-                />
+                <ArticleWithMidAd html={richContent} pageType="material" />
               </div>
             )}
+
+            <AdSlot position="bottom" pageType="material" minHeight={250} />
 
             <ConversionBanner
               title="Precisa de materiais para impressão?"
               description="Confira nossa linha completa de etiquetas, ribbons e acessórios."
               buttonText="Ver na Loja"
             />
+
+            <MultiplexAd pageType="material" />
           </div>
 
           <div className="space-y-6">
+            <StickySidebarAd pageType="material" />
             {related && related.length > 0 && (
               <RelatedSidebar
                 title="Materiais Relacionados"

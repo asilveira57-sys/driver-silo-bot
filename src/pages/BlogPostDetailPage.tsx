@@ -7,6 +7,10 @@ import { ConversionBanner } from "@/components/ConversionBanner";
 import { RelatedSidebar } from "@/components/RelatedSidebar";
 import { ChevronRight, Calendar, BookOpen } from "lucide-react";
 import { sanitizeContent } from "@/lib/htmlUtils";
+import { AdSlot } from "@/components/ads/AdSlot";
+import { ArticleWithMidAd } from "@/components/ads/ArticleWithMidAd";
+import { MultiplexAd } from "@/components/ads/MultiplexAd";
+import { StickySidebarAd } from "@/components/ads/StickySidebarAd";
 
 export default function BlogPostDetailPage() {
   const { slug } = useParams();
@@ -78,10 +82,9 @@ export default function BlogPostDetailPage() {
                 {post.imagem_url && (
                   <img src={post.imagem_url} alt={post.titulo} className="w-full h-auto rounded-lg mb-6" loading="lazy" />
                 )}
-                <div
-                  className="prose prose-slate max-w-none text-foreground [&_h1]:font-heading [&_h2]:font-heading [&_h3]:font-heading [&_a]:text-primary"
-                  dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-                />
+                <AdSlot position="top" pageType="blog" minHeight={100} />
+                <ArticleWithMidAd html={sanitizedContent} pageType="blog" />
+                <AdSlot position="bottom" pageType="blog" minHeight={250} />
               </article>
             ) : (
               <div className="text-center py-20">
@@ -89,9 +92,11 @@ export default function BlogPostDetailPage() {
                 <p className="text-muted-foreground">Post não encontrado.</p>
               </div>
             )}
+            {post && <MultiplexAd pageType="blog" />}
             <div className="mt-8"><ConversionBanner /></div>
           </div>
           <div className="space-y-6">
+            <StickySidebarAd pageType="blog" />
             {related && related.length > 0 && (
               <RelatedSidebar
                 title="Posts Relacionados"

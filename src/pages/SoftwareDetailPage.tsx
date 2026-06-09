@@ -6,6 +6,9 @@ import { SEOHead } from "@/components/SEOHead";
 import { ConversionBanner } from "@/components/ConversionBanner";
 import { Download, ChevronRight, Package } from "lucide-react";
 import { sanitizeContent } from "@/lib/htmlUtils";
+import { AdSlot } from "@/components/ads/AdSlot";
+import { ArticleWithMidAd } from "@/components/ads/ArticleWithMidAd";
+import { MultiplexAd } from "@/components/ads/MultiplexAd";
 
 export default function SoftwareDetailPage() {
   const { nome } = useParams();
@@ -53,12 +56,15 @@ export default function SoftwareDetailPage() {
               {software.descricao && <p className="text-muted-foreground">{software.descricao}</p>}
               <a href={software.link_download} target="_blank" rel="noopener" className="download-btn text-base mt-6 inline-flex"><Download className="h-5 w-5" />Download {software.nome}</a>
             </div>
+            <AdSlot position="top" pageType="software" minHeight={100} />
             {richContent && (
               <div className="silo-card">
-                <div className="prose prose-slate max-w-none text-foreground [&_h1]:font-heading [&_h2]:font-heading [&_h3]:font-heading [&_a]:text-primary" dangerouslySetInnerHTML={{ __html: richContent }} />
+                <ArticleWithMidAd html={richContent} pageType="software" />
               </div>
             )}
+            <AdSlot position="bottom" pageType="software" minHeight={250} />
             <ConversionBanner />
+            <MultiplexAd pageType="software" />
           </div>
         ) : (
           <div className="text-center py-20"><Package className="h-16 w-16 text-muted-foreground/30 mx-auto mb-4" /><p className="text-muted-foreground">Software não encontrado.</p></div>
