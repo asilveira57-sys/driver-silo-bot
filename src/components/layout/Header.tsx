@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Search, Printer, Download, BookOpen, Package, Cpu } from "lucide-react";
+import { Menu, X, Search, Printer, Download, BookOpen, Package, Cpu, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoAdeconex from "@/assets/logo-adeconex.png";
 
@@ -10,6 +10,7 @@ const navItems = [
   { label: "Softwares", path: "/softwares", icon: Download },
   { label: "Tutoriais", path: "/tutoriais", icon: BookOpen },
   { label: "Materiais", path: "/materiais", icon: Package },
+  { label: "Ferramentas", path: "/ferramentas", icon: Wrench },
   { label: "Downloads", path: "/downloads", icon: Download },
   { label: "Blog", path: "/blog", icon: BookOpen },
 ];
