@@ -9,7 +9,9 @@ import { toast } from "sonner";
 import { Loader2, Save, Download, ExternalLink, RefreshCw, Sparkles } from "lucide-react";
 
 const SITE_BASE = "https://www.adeconex.com";
-const SITEMAP_URL = `${SITE_BASE}/sitemap.xml`;
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SITEMAP_URL = `${SUPABASE_URL}/functions/v1/sitemap`;
+const SITEMAP_PUBLIC_URL = `${SITE_BASE}/sitemap.xml`;
 const ROBOTS_URL = `${SITE_BASE}/robots.txt`;
 
 type Settings = {
