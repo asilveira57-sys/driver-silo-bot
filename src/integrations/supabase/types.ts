@@ -14,6 +14,78 @@ export type Database = {
   }
   public: {
     Tables: {
+      adsense_metrics: {
+        Row: {
+          clicks: number
+          created_at: string
+          ctr: number | null
+          estimated_rpm: number | null
+          id: string
+          impressions: number
+          page_type: string | null
+          page_url: string
+        }
+        Insert: {
+          clicks?: number
+          created_at?: string
+          ctr?: number | null
+          estimated_rpm?: number | null
+          id?: string
+          impressions?: number
+          page_type?: string | null
+          page_url: string
+        }
+        Update: {
+          clicks?: number
+          created_at?: string
+          ctr?: number | null
+          estimated_rpm?: number | null
+          id?: string
+          impressions?: number
+          page_type?: string | null
+          page_url?: string
+        }
+        Relationships: []
+      }
+      adsense_render_logs: {
+        Row: {
+          ad_blocker_detected: boolean | null
+          created_at: string
+          device: string | null
+          error_message: string | null
+          id: string
+          load_time_ms: number | null
+          page_type: string | null
+          page_url: string
+          position: string | null
+          status: string | null
+        }
+        Insert: {
+          ad_blocker_detected?: boolean | null
+          created_at?: string
+          device?: string | null
+          error_message?: string | null
+          id?: string
+          load_time_ms?: number | null
+          page_type?: string | null
+          page_url: string
+          position?: string | null
+          status?: string | null
+        }
+        Update: {
+          ad_blocker_detected?: boolean | null
+          created_at?: string
+          device?: string | null
+          error_message?: string | null
+          id?: string
+          load_time_ms?: number | null
+          page_type?: string | null
+          page_url?: string
+          position?: string | null
+          status?: string | null
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           categoria: string
