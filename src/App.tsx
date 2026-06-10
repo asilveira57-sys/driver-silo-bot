@@ -27,6 +27,7 @@ import LGPDPage from "./pages/LGPDPage";
 import ContatoPage from "./pages/ContatoPage";
 import FerramentasPage from "./pages/FerramentasPage";
 import QRCodeGeneratorPage from "./pages/ferramentas/QRCodeGeneratorPage";
+import WhatsAppLinkGeneratorPage from "./pages/ferramentas/WhatsAppLinkGeneratorPage";
 import { CookieConsent } from "./components/CookieConsent";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -72,6 +73,7 @@ const App = () => (
             <Route path="/contato" element={<ContatoPage />} />
             <Route path="/ferramentas" element={<FerramentasPage />} />
             <Route path="/ferramentas/gerador-qrcode" element={<QRCodeGeneratorPage />} />
+            <Route path="/ferramentas/gerador-link-whatsapp" element={<WhatsAppLinkGeneratorPage />} />
             <Route path="/admin/login" element={<AdminLoginPage />} />
             <Route path="/admin" element={<AdminDashboard />}>
               <Route index element={<AdminHome />} />
