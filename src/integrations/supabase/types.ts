@@ -304,6 +304,69 @@ export type Database = {
         }
         Relationships: []
       }
+      short_link_clicks: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          source: string
+          user_agent: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          source?: string
+          user_agent?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          source?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      short_links: {
+        Row: {
+          clicks: number
+          code: string
+          created_at: string
+          id: string
+          last_click_at: string | null
+          original_url: string
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          clicks?: number
+          code: string
+          created_at?: string
+          id?: string
+          last_click_at?: string | null
+          original_url: string
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          clicks?: number
+          code?: string
+          created_at?: string
+          id?: string
+          last_click_at?: string | null
+          original_url?: string
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
       site_settings: {
         Row: {
           ga_id: string | null
@@ -534,6 +597,10 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      register_short_link_click: {
+        Args: { _code: string; _source: string; _user_agent: string }
+        Returns: undefined
       }
     }
     Enums: {
