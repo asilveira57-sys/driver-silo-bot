@@ -551,6 +551,8 @@ export default function UrlShortenerPage() {
           </div>
         </section>
 
+        <AdSlot position="mid" pageType="ferramenta-encurtador-url" />
+
         {/* SECTION 4 — How it works */}
         <section className="rounded-3xl bg-gradient-to-br from-muted/40 via-card to-primary/5 border p-8 md:p-12">
           <div className="text-center mb-10">
