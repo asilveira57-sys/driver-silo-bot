@@ -28,6 +28,8 @@ import ContatoPage from "./pages/ContatoPage";
 import FerramentasPage from "./pages/FerramentasPage";
 import QRCodeGeneratorPage from "./pages/ferramentas/QRCodeGeneratorPage";
 import WhatsAppLinkGeneratorPage from "./pages/ferramentas/WhatsAppLinkGeneratorPage";
+import UrlShortenerPage from "./pages/ferramentas/UrlShortenerPage";
+import ShortLinkRedirect from "./pages/ShortLinkRedirect";
 import { CookieConsent } from "./components/CookieConsent";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -74,6 +76,8 @@ const App = () => (
             <Route path="/ferramentas" element={<FerramentasPage />} />
             <Route path="/ferramentas/gerador-qrcode" element={<QRCodeGeneratorPage />} />
             <Route path="/ferramentas/gerador-link-whatsapp" element={<WhatsAppLinkGeneratorPage />} />
+            <Route path="/ferramentas/encurtador-url" element={<UrlShortenerPage />} />
+            <Route path="/l/:code" element={<ShortLinkRedirect />} />
             <Route path="/admin/login" element={<AdminLoginPage />} />
             <Route path="/admin" element={<AdminDashboard />}>
               <Route index element={<AdminHome />} />
