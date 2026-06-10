@@ -471,44 +471,129 @@ export default function UrlShortenerPage() {
           </div>
         </div>
 
-        {/* USE CASES */}
-        <div>
-          <h2 className="font-heading text-3xl font-bold text-center mb-2">Onde usar links curtos</h2>
-          <p className="text-center text-muted-foreground mb-8">URLs curtas aumentam cliques, confiança e profissionalismo em qualquer canal.</p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {useCases.map(({ icon: Icon, title, text }) => (
-              <Card key={title} className="silo-card">
-                <CardHeader>
-                  <div className="h-10 w-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-2"><Icon className="h-5 w-5" /></div>
-                  <CardTitle className="text-lg">{title}</CardTitle>
-                  <CardDescription>{text}</CardDescription>
-                </CardHeader>
-              </Card>
+        {/* SECTION 1 — What is */}
+        <section className="grid lg:grid-cols-2 gap-8 items-center">
+          <div>
+            <div className="h-14 w-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-4 shadow-sm">
+              <Link2 className="h-7 w-7" />
+            </div>
+            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-3">O que é um Encurtador de URL?</h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              Uma ferramenta que transforma endereços longos em links curtos, elegantes e fáceis de compartilhar — perfeitos para redes sociais, WhatsApp, e-mail marketing e campanhas pagas.
+            </p>
+          </div>
+          <div className="bg-gradient-to-br from-primary/5 via-card to-blue-50 rounded-2xl border p-6 shadow-md animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <p className="text-xs uppercase tracking-wider text-muted-foreground mb-2">URL Original</p>
+            <p className="font-mono text-sm break-all bg-card border rounded-lg p-3 text-muted-foreground">
+              https://www.adeconex.com.br/produtos/ribbon-resina-premium-110x450mm
+            </p>
+            <div className="flex justify-center my-3">
+              <div className="h-9 w-9 rounded-full cta-gradient text-white flex items-center justify-center shadow-md animate-bounce">
+                <ArrowDown className="h-5 w-5" />
+              </div>
+            </div>
+            <p className="text-xs uppercase tracking-wider text-muted-foreground mb-2">URL Curta</p>
+            <div className="flex items-center gap-2 bg-primary/10 border-2 border-primary/30 rounded-lg p-3">
+              <Link2 className="h-5 w-5 text-primary shrink-0" />
+              <span className="font-mono font-semibold text-primary">adeconex.com/l/ribbon</span>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 2 — Benefits */}
+        <section>
+          <div className="text-center mb-8">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-2">Benefícios</h2>
+            <p className="text-muted-foreground">Por que milhares de profissionais escolhem links curtos.</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              { icon: TrendingUp, title: "Mais Cliques", text: "Links curtos geram maior confiança e melhor CTR.", color: "text-emerald-600", bg: "bg-emerald-500/10" },
+              { icon: Sparkles, title: "Aparência Profissional", text: "URLs limpas melhoram a comunicação.", color: "text-amber-600", bg: "bg-amber-500/10" },
+              { icon: Send, title: "Compartilhamento Fácil", text: "Ideal para WhatsApp, Instagram e e-mail.", color: "text-blue-600", bg: "bg-blue-500/10" },
+              { icon: Target, title: "Melhor Rastreamento", text: "Acompanhe campanhas com parâmetros UTM.", color: "text-rose-600", bg: "bg-rose-500/10" },
+              { icon: Smartphone, title: "Compatível com Redes Sociais", text: "Funciona em qualquer plataforma.", color: "text-violet-600", bg: "bg-violet-500/10" },
+              { icon: QrCode, title: "QR Code Automático", text: "Transforme links em QR Codes instantaneamente.", color: "text-primary", bg: "bg-primary/10" },
+            ].map(({ icon: Icon, title, text, color, bg }) => (
+              <div key={title} className="group rounded-2xl border bg-card p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div className={`h-12 w-12 rounded-xl ${bg} ${color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                  <Icon className="h-6 w-6" />
+                </div>
+                <h3 className="font-heading font-bold text-lg mb-1">{title}</h3>
+                <p className="text-sm text-muted-foreground">{text}</p>
+              </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        <AdSlot position="mid" pageType="ferramenta-encurtador-url" />
+        {/* SECTION 3 — Where to use */}
+        <section>
+          <div className="text-center mb-8">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-2">Onde Utilizar</h2>
+            <p className="text-muted-foreground">Use em qualquer canal de marketing ou comunicação.</p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {[
+              { icon: Instagram, name: "Instagram", color: "from-pink-500 to-rose-500" },
+              { icon: Search, name: "Google Ads", color: "from-blue-500 to-cyan-500" },
+              { icon: Facebook, name: "Facebook Ads", color: "from-blue-600 to-indigo-600" },
+              { icon: MessageCircle, name: "WhatsApp", color: "from-emerald-500 to-green-600" },
+              { icon: Music2, name: "TikTok", color: "from-slate-800 to-slate-900" },
+              { icon: Store, name: "E-commerce", color: "from-amber-500 to-orange-500" },
+            ].map(({ icon: Icon, name, color }) => (
+              <div key={name} className="group rounded-2xl border bg-card p-5 text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <div className={`h-12 w-12 mx-auto rounded-xl bg-gradient-to-br ${color} text-white flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-md`}>
+                  <Icon className="h-6 w-6" />
+                </div>
+                <p className="text-sm font-semibold">{name}</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
-        {/* SEO CONTENT */}
-        <article className="prose prose-slate max-w-none">
-          <h2 className="font-heading">O que é um Encurtador de URL?</h2>
-          <p>Um <strong>encurtador de URL</strong> é uma ferramenta que transforma endereços longos da web em links muito mais curtos e fáceis de compartilhar. Em vez de copiar um link cheio de caracteres, números e parâmetros, você cria uma versão simples como <code>{SITE_ORIGIN}/l/promocao-junho</code>, que aponta exatamente para o destino original.</p>
-          <p>Essa tecnologia surgiu para resolver uma limitação prática: em mensagens, descrições, redes sociais, biografias e materiais impressos, links extensos quebram o layout, geram desconfiança e reduzem cliques. Com um link curto, sua comunicação fica limpa, elegante e profissional — características essenciais para campanhas de marketing digital, e-commerce, vendas em marketplaces e atendimento via WhatsApp.</p>
-          <p>O Encurtador de URL da Adeconex vai além: além de gerar o link curto, ele cria automaticamente um <strong>QR Code de alta resolução</strong>, permite <strong>personalizar o final da URL</strong>, adiciona <strong>parâmetros UTM</strong> para campanhas e oferece <strong>estatísticas básicas de cliques</strong> e origem do tráfego.</p>
+        {/* SECTION 4 — How it works */}
+        <section className="rounded-3xl bg-gradient-to-br from-muted/40 via-card to-primary/5 border p-8 md:p-12">
+          <div className="text-center mb-10">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-2">Como Funciona</h2>
+            <p className="text-muted-foreground">Três passos para criar um link curto profissional.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { n: "1", title: "Cole a URL", text: "Insira o link longo que deseja encurtar." },
+              { n: "2", title: "Personalize o link", text: "Escolha um final memorável ou use UTM." },
+              { n: "3", title: "Copie e compartilhe", text: "Use em qualquer canal com QR Code grátis." },
+            ].map(({ n, title, text }) => (
+              <div key={n} className="relative bg-card rounded-2xl border p-6 shadow-sm hover:shadow-lg transition-shadow text-center">
+                <div className="mx-auto mb-3 h-16 w-16 rounded-full cta-gradient text-white flex items-center justify-center font-heading font-bold text-3xl shadow-lg">
+                  {n}
+                </div>
+                <h3 className="font-heading font-bold text-xl mb-1">{title}</h3>
+                <p className="text-sm text-muted-foreground">{text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
-          <h2 className="font-heading">Benefícios dos Links Curtos</h2>
-          <ul>
-            <li><strong>Mais cliques:</strong> links curtos geram CTR mais alto em redes sociais e e-mails.</li>
-            <li><strong>Melhor aparência:</strong> mensagens e posts ficam limpos e profissionais.</li>
-            <li><strong>Compartilhamento fácil:</strong> menos caracteres, mais espaço para sua mensagem.</li>
-            <li><strong>Melhor rastreamento:</strong> identifique de onde vêm seus visitantes.</li>
-            <li><strong>Campanhas profissionais:</strong> use UTM e personalização para análises precisas.</li>
-          </ul>
-
-          <h2 className="font-heading">Como usar em Marketing Digital</h2>
-          <p>Em <strong>Google Ads</strong> e <strong>Meta Ads</strong>, URLs curtas com UTM facilitam análise por campanha e criativo. No <strong>Instagram</strong>, são essenciais para a bio e para Stories com link. No <strong>TikTok</strong>, encurtam descrições e biografia. Em <strong>e-mail marketing</strong>, melhoram a entregabilidade e a leitura. Em conversas no <strong>WhatsApp</strong>, transmitem mais credibilidade do que URLs longas e cheias de parâmetros estranhos.</p>
-        </article>
+        {/* SECTION 5 — Premium resources */}
+        <section>
+          <div className="text-center mb-8">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-2">Recursos Avançados</h2>
+            <p className="text-muted-foreground">Tudo que você precisa em uma única ferramenta gratuita.</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              "Link personalizado", "QR Code integrado", "Parâmetros UTM",
+              "Estatísticas de acesso", "Compartilhamento rápido", "Compatível com campanhas",
+            ].map((feat) => (
+              <div key={feat} className="flex items-center gap-3 rounded-xl border bg-card p-4 hover:border-primary/40 hover:shadow-md transition-all">
+                <div className="h-9 w-9 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                  <Check className="h-5 w-5" />
+                </div>
+                <span className="font-semibold">{feat}</span>
+              </div>
+            ))}
+          </div>
+        </section>
 
         <MultiplexAd pageType="ferramenta-encurtador-url" />
 
