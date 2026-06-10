@@ -56,6 +56,7 @@ async function generate(): Promise<string> {
     { loc: "/downloads", priority: "0.7", changefreq: "weekly" },
     { loc: "/ferramentas", priority: "0.8", changefreq: "weekly" },
     { loc: "/ferramentas/gerador-qrcode", priority: "0.7", changefreq: "monthly" },
+    { loc: "/ferramentas/gerador-link-whatsapp", priority: "0.7", changefreq: "monthly" },
     { loc: "/quem-somos", priority: "0.6", changefreq: "monthly" },
     { loc: "/contato", priority: "0.6", changefreq: "monthly" },
     { loc: "/politica-de-privacidade", priority: "0.5", changefreq: "yearly" },
