@@ -21,7 +21,8 @@ import {
   Link2, Copy, ExternalLink, QrCode, Share2, Check, BarChart3, Calendar,
   MousePointerClick, Sparkles, Zap, ShieldCheck, ImageDown, FileDown,
   MessageCircle, Instagram, Facebook, Linkedin, Youtube, Mail, ShoppingBag,
-  Wand2, Tag, ArrowRight,
+  Wand2, Tag, ArrowRight, TrendingUp, Send, Target, Smartphone, Search,
+  Music2, Store, ArrowDown,
 } from "lucide-react";
 
 const TOOL_SLUG = "encurtador-url";
